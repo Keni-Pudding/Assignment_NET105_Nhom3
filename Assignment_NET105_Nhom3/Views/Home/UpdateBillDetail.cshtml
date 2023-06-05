@@ -1,0 +1,43 @@
+﻿@model Assignment_NET105_Nhom3.Models.Bill;
+<form asp-action="UpdateBillDetail" style="margin-top: 30px; margin-bottom: 30px;" enctype="multipart/form-data">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-9">
+                               <div class="mb-3 row" style=" font-size: 13pt;">
+                    <label class="col-sm-2 col-form-label">Tình trạng</label>
+                    <div class="col-sm-10">
+
+                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">                       
+                                <input asp-for="Status" type="radio" class="btn-check" name="Status" id="0" value="0">
+                                <label asp-for="Status" class="btn btn-outline-primary" for="0">Đã huỷ</label>
+
+                                <input asp-for="Status" type="radio" class="btn-check" name="Status" id="1" value="1">
+                                <label asp-for="Status" class="btn btn-outline-primary" for="1">Đang giao hàng</label>
+
+                                <input asp-for="Status" type="radio" class="btn-check" name="Status" id="2" value="2">
+                                <label asp-for="Status" class="btn btn-outline-primary" for="2">Thành công</label>
+                          
+                            
+                        </div>
+
+                    </div>
+                </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Update" class="btn btn-primary" />
+                </div>
+
+                <a href="@Url.Action("ProductList","Management",new{ })">
+                    <button type="button" class="btn btn-success" style="width: 70px;height: 30px; font-size:13pt; margin-top:20px">
+                        <i class="fa-solid fa-left-long"></i>
+                    </button>
+                </a>
+
+            </div>
+        </div>
+    </div>
+</form>
+
