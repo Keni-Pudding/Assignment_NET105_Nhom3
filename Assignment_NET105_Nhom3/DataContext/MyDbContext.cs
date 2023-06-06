@@ -25,6 +25,8 @@ namespace Assignment_NET105_Nhom3.DataContext
         public DbSet<ProductDetails> ProductDetails { get; set; }
         public DbSet<Role> Role { get; set; }
         public DbSet<Size> Size { get; set; }
+        public DbSet<Combos> Combos { get; set; }
+        public DbSet<ComboDetails> ComboDetails { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
