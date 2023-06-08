@@ -1,7 +1,7 @@
-﻿using Assignment_NET105_Nhom3.Models;
+﻿using Assignment_NET105_Nhom3_Shared.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-namespace Assignment_ThangNVPH25980.Configurations
+namespace Assignment_NET105_Nhom3_API.Configurations
 {
     public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
     {

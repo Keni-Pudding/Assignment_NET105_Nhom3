@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Assignment_NET105_Nhom3_API.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20230608161225_ASM_NET105")]
-    partial class ASM_NET105
+    [Migration("20230608162912_Create1")]
+    partial class Create1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

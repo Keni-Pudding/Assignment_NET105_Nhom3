@@ -1,6 +1,7 @@
-﻿using Assignment_NET105_Nhom3.Models;
+﻿using Assignment_NET105_Nhom3_Shared.Models;
 using Assignment_NET105_Nhom3_API.DataContext;
 using Assignment_NET105_Nhom3_API.IServices;
+
 
 namespace Assignment_NET105_Nhom3_API.Services
 {

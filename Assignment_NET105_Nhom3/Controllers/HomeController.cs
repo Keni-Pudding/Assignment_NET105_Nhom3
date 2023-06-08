@@ -1,4 +1,5 @@
 ﻿using Assignment_NET105_Nhom3.Models;
+using Assignment_NET105_Nhom3_Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

@@ -44,7 +44,7 @@
             </div>
             <div class="row" style="margin-bottom:30px; margin-top:50px">
 
-                @foreach (Products a in ViewBag.Products)
+                @foreach (var a in ViewBag.Products)
                 {
                     <div class="col-md-3">
                         <a href="@Url.Action("Detail","Home",new{Id=a.Id})" style="text-decoration:none; color: white">

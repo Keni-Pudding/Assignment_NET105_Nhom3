@@ -1,4 +1,4 @@
-﻿using Assignment_NET105_Nhom3.Models;
+﻿using Assignment_NET105_Nhom3_Shared.Models;
 
 namespace Assignment_NET105_Nhom3_API.IServices
 {
