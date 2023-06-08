@@ -17,6 +17,7 @@ builder.Services.AddDbContext<MyDbContext>(option =>
 });
 builder.Services.AddTransient<IBillServices, BillServices>();
 builder.Services.AddTransient<IProductDetailsService, ProductDetailsService>();
+builder.Services.AddTransient<IShowProductsService, ShowProductService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
