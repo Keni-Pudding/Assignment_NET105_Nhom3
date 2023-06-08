@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Assignment_NET105_Nhom3.Migrations
+namespace Assignment_NET105_Nhom3_API.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20230606142652_Create")]
+    [Migration("20230608155930_Create")]
     partial class Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

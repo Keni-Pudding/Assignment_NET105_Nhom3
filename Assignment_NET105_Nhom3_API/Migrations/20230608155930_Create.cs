@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Assignment_NET105_Nhom3.Migrations
+namespace Assignment_NET105_Nhom3_API.Migrations
 {
     public partial class Create : Migration
     {

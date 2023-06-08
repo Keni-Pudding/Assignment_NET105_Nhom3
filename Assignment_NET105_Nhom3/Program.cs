@@ -1,14 +1,15 @@
-using Assignment_NET105_Nhom3.DataContext;
+
+//using Assignment_NET105_Nhom3.DataContext;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<MyDbContext>(option =>
-{
-    option.UseSqlServer(builder.Configuration.GetConnectionString("CS"));
-});
+//builder.Services.AddDbContext<MyDbContext>(option =>
+//{
+//    option.UseSqlServer(builder.Configuration.GetConnectionString("CS"));
+//});
 
 var app = builder.Build();
 
