@@ -1,4 +1,4 @@
-using Assignment_NET105_Nhom3.DataContext;
+using Assignment_NET105_Nhom3_API.DataContext;
 using Assignment_NET105_Nhom3_API.IServices;
 using Assignment_NET105_Nhom3_API.Services;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +16,7 @@ builder.Services.AddDbContext<MyDbContext>(option =>
     option.UseSqlServer(builder.Configuration.GetConnectionString("CS"));
 });
 builder.Services.AddTransient<IBillServices, BillServices>();
+builder.Services.AddTransient<IProductDetailsService, ProductDetailsService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

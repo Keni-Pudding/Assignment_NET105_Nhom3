@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace Assignment_NET105_Nhom3.DataContext
+namespace Assignment_NET105_Nhom3_API.DataContext
 {
     public class MyDbContext:DbContext
     {

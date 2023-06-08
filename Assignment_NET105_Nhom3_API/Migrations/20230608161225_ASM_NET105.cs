@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Assignment_NET105_Nhom3_API.Migrations
 {
-    public partial class Create : Migration
+    public partial class ASM_NET105 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
