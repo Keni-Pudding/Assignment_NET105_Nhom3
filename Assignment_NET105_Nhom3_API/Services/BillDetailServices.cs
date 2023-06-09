@@ -16,7 +16,7 @@ namespace Assignment_NET105_Nhom3_API.Services
         {
             try
             {
-                await _context.BillDetails.AddAsync(billDetails);
+                _context.BillDetails.Add(billDetails);
                 await _context.SaveChangesAsync();
                 return true;
             }

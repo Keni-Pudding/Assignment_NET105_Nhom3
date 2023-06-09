@@ -19,14 +19,14 @@ namespace Assignment_NET105_Nhom3_API.Controllers
         [HttpGet]
         public async Task<ActionResult<ProductDetails>> GetAllProductDetails() //  Lấy danh sách data
         {
-            var lpd = await _productDetailsService.GetAllProductDetailsAsync();
-            return Ok(lpd);
+            var result = await _productDetailsService.GetAllProductDetailsAsync();
+            return Ok(result);
         }
         [HttpGet("getbyID")]
         public async Task<ActionResult<ProductDetails>> GetProductDetailsByID(Guid ID) // Lấy data theo Id
         {
-            var pd = await _productDetailsService.GetProductDetailsByIDAsync(ID);
-            return Ok(pd);
+            var result = await _productDetailsService.GetProductDetailsByIDAsync(ID);
+            return Ok(result);
         }
         [HttpPost("add-ProductDetails")]
         public async Task<ActionResult<ProductDetails>> PostProductDetails(ProductDetailsViewModels pdvm) // Tạo mới
@@ -38,8 +38,8 @@ namespace Assignment_NET105_Nhom3_API.Controllers
             pd.ColorId = pdvm.ColorId;
             pd.AvaiableQuatity = pdvm.AvaiableQuatity;
             pd.Status = pdvm.Status;
-            await _productDetailsService.PostProductDetailsAsync(pd);
-            return Ok();
+            var result = await _productDetailsService.PostProductDetailsAsync(pd);
+            return Ok(result);
         }
         [HttpPut("update-ProductDetails")]
         public async Task<ActionResult<ProductDetails>> PutProductDetails(ProductDetailsViewModels pdvm) // Update
@@ -50,12 +50,13 @@ namespace Assignment_NET105_Nhom3_API.Controllers
             pd.ColorId = pdvm.ColorId;
             pd.AvaiableQuatity = pdvm.AvaiableQuatity;
             pd.Status = pdvm.Status;
-            await _productDetailsService.PutProductDetailsAsync(pd); return Ok();
+            var result = await _productDetailsService.PutProductDetailsAsync(pd); return Ok(result);
         }
         [HttpDelete("delete-ProductDetails")]
         public async Task<ActionResult<ProductDetails>> DeleteProductDetails(Guid ID) // Delete theo Id
         {
-            await _productDetailsService.DeleteProductDetailsAsync(ID); return Ok();
+            var result = await _productDetailsService.DeleteProductDetailsAsync(ID);
+            return Ok(result);
         }
     }
 }

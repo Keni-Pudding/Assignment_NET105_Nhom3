@@ -74,7 +74,7 @@ namespace Assignment_NET105_Nhom3_API.Controllers  /// ở đây có bill và bi
         {
             BillDetails bill1 = new BillDetails();
             bill1.Id = Guid.NewGuid();
-            bill1.BillId = bill.Id;
+            bill1.BillId = bill.BillId;
             if (bill.ComboId == Guid.Empty || bill.ComboId==null)
             {
                 bill1.ProductDetailsId = bill.ProductDetailsId;
@@ -85,8 +85,8 @@ namespace Assignment_NET105_Nhom3_API.Controllers  /// ở đây có bill và bi
             }                  
             bill1.Price = bill.Price;
             bill1.Quantity  = bill.Quantity;
-            await _billDetailServices.Add(bill1);
-            return Ok();
+            var result = await _billDetailServices.Add(bill1);
+            return Ok(result);
         }
 
         [HttpPut("update-billdetails")]
