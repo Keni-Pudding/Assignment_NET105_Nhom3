@@ -12,14 +12,15 @@ namespace Assignment_NET105_Nhom3_API.Controllers
 
     public class BillControllers : ControllerBase
     {
-        private readonly MyDbContext _context = new MyDbContext();
         private readonly IBillServices _billServices;
-        public BillControllers(IBillServices billServices)
+        private readonly IBillDetailServices _billDetailServices;   
+        public BillControllers(IBillServices billServices, IBillDetailServices billDetailServices)
         {
             _billServices = billServices;
+            _billDetailServices = billDetailServices;
         }
 
-        [HttpGet("get-all")]
+        [HttpGet("get-all-bill")]
         public async Task<IActionResult> GetAllBill()
         {
             var a = await _billServices.GetAllBill();
@@ -34,16 +35,18 @@ namespace Assignment_NET105_Nhom3_API.Controllers
             bill1.Status = bill.Status;
             bill1.CreatedDate= DateTime.Now;
             bill1.UserId = Guid.Parse("f9a991b2-c9cf-4ef6-9aec-90235617bce6");
-            _context.Bill.Add(bill1);
-            await _context.SaveChangesAsync();
-            return Ok(bill);
+
+            await _billServices.AddBill(bill1);
+            return Ok(bill1);
         }
         [HttpPut("update_bill")]
-        public async Task<ActionResult<Bill>> UpdateBill(Bill bill)
+        public async Task<ActionResult<BillViewModel>> UpdateBill(BillViewModel bill)
         {
-            var a = await _billServices.GetBillById(bill.Id);
+            var a = await _billServices.GetBillById(bill.Id); 
+            a.Status = bill.Status;
+            a.CreatedDate = DateTime.Now;
             await _billServices.Update(a);
-            return Ok(bill);
+            return Ok(a);
         }
         [HttpDelete("delete_bill")]
         public async Task<ActionResult<Bill>> DeleteBill(Guid Id)
@@ -53,13 +56,60 @@ namespace Assignment_NET105_Nhom3_API.Controllers
             return Ok(a);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> AddCombo([FromBody] Color color)
+
+
+
+
+
+
+        [HttpGet("get-all-billdetails")]
+        public async Task<IActionResult> GetAllBillDetails()
         {
-            _context.Color.Add(color);
-            await _context.SaveChangesAsync();
-            return Ok("ối dồi ôi ");
+            var a = await _billDetailServices.GetAllBillDetail();
+            return Ok(a);
         }
+
+        [HttpPost("add-billdetails")]
+        public async Task<ActionResult<BillDetailsViewModels>> AddBillDetails(BillDetailsViewModels bill)
+        {
+            BillDetails bill1 = new BillDetails();
+            bill1.Id = Guid.NewGuid();
+            bill1.BillId = bill.Id;
+            if (bill.ComboId == Guid.Empty)
+            {
+                bill1.ProductDetailsId = bill.ProductDetailsId;
+            }
+            else
+            {
+                bill1.ComboId = bill.ComboId;
+            }                  
+            bill1.Price = bill.Price;
+            bill1.Quantity  = bill.Quantity;
+            await _billDetailServices.Add(bill1);
+            return Ok(bill1);
+        }
+
+        [HttpPost("update-billdetails")]
+        public async Task<ActionResult<BillDetailsViewModels>> UpdateBillDetails(BillDetailsViewModels bill)
+        {
+            BillDetails bill1 = new BillDetails();
+            bill1.Id = Guid.NewGuid();
+            bill1.BillId = bill.Id;
+            if (bill.ComboId == Guid.Empty)
+            {
+                bill1.ProductDetailsId = bill.ProductDetailsId;
+            }
+            else
+            {
+                bill1.ComboId = bill.ComboId;
+            }
+            bill1.Price = bill.Price;
+            bill1.Quantity = bill.Quantity;
+            await _billDetailServices.Add(bill1);
+            return Ok(bill1);
+        }
+
+
 
 
     }

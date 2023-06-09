@@ -16,8 +16,10 @@ builder.Services.AddDbContext<MyDbContext>(option =>
     option.UseSqlServer(builder.Configuration.GetConnectionString("CS"));
 });
 builder.Services.AddTransient<IBillServices, BillServices>();
+builder.Services.AddTransient<IBillDetailServices, BillDetailServices>();
 builder.Services.AddTransient<IProductDetailsService, ProductDetailsService>();
 builder.Services.AddTransient<IShowProductsService, ShowProductService>();
+builder.Services.AddTransient<IColorServices, ColorServices>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -27,6 +27,29 @@ namespace Assignment_NET105_Nhom3.Controllers
         {
             return View();
         }
+        public IActionResult SignUp()
+        {
+            return View();
+        }
+        public IActionResult Bill()
+        {
+            return View();
+        }
+        [HttpGet]
+        //public IActionResult Bill()
+        //{
+
+        //}
+
+        public IActionResult Cart()
+        {
+            return View();
+        }
+        public IActionResult Products()
+        {
+            return View();
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

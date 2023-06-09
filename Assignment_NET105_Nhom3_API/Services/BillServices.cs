@@ -12,7 +12,7 @@ namespace Assignment_NET105_Nhom3_API.Services
         {
             _context = context;
         }
-        public async Task<Bill> Add(Bill bill)
+        public async Task<Bill> AddBill(Bill bill)
         {
             try
             {
@@ -26,18 +26,18 @@ namespace Assignment_NET105_Nhom3_API.Services
             }
         }
 
-        public async Task<bool> Delete(Bill bill)
+        public async Task<Bill> Delete(Bill bill)
         {
             try
             {
                 var a = await _context.Bill.FindAsync(bill.Id);
                 _context.Bill.Remove(a);
                 await _context.SaveChangesAsync();
-                return true;
+                return a;
             }
             catch (Exception e)
             {
-                return false;
+                return null;
             }
         }
 
@@ -56,20 +56,20 @@ namespace Assignment_NET105_Nhom3_API.Services
             throw new NotImplementedException();
         }
 
-        public async Task<bool> Update(Bill bill)
+        public async Task<Bill> Update(Bill bill)
         {
             try
             {
-                var a = await _context.Bill.FindAsync(bill.Id);
+                Bill a = await _context.Bill.FindAsync(bill.Id);
                 a.Status = bill.Status;
                 a.CreatedDate = bill.CreatedDate;
                 _context.Bill.Update(a);
                 await _context.SaveChangesAsync();
-                return true;
+                return a;
             }
             catch (Exception e)
             {
-                return false;
+                return null;
             }
         }
     }
