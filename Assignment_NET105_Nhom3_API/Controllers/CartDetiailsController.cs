@@ -1,6 +1,6 @@
-﻿using Assignment_NET105_Nhom3.Models;
-using Assignment_NET105_Nhom3_API.IServices;
+﻿using Assignment_NET105_Nhom3_API.IServices;
 using Assignment_NET105_Nhom3_API.Services;
+using Assignment_NET105_Nhom3_Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
