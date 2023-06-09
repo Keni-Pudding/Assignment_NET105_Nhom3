@@ -1,6 +1,7 @@
 ﻿using Assignment_NET105_Nhom3_API.IServices;
 using Assignment_NET105_Nhom3_API.Services;
 using Assignment_NET105_Nhom3_Shared.Models;
+using Assignment_NET105_Nhom3_Shared.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +16,7 @@ namespace Assignment_NET105_Nhom3_API.Controllers
         {
             cartDetailService = _A;
         }
-        [HttpGet]
+        [HttpGet("abc")]
         public async Task<ActionResult<CartDetails>> GetAllCartDetails() //  Lấy danh sách data
         {
             var lpd = await cartDetailService.GetAllCartDetailssAsync();
@@ -27,16 +28,29 @@ namespace Assignment_NET105_Nhom3_API.Controllers
             var pd = await cartDetailService.GetCartDetailssByIDAsync(ID);
             return Ok(pd);
         }
-        [HttpPost]
-        public async Task<ActionResult<CartDetails>> PostCartDetails(CartDetails pd) // Tạo mới
+        [HttpPost("Addlist/")]
+        public async Task<ActionResult<CartDetailsViewModels>> PostCartDetails(CartDetailsViewModels pd) // Tạo mới
         {
-            await cartDetailService.PostCartDetailssAsync(pd);
-            return Ok();
+            CartDetails ct = new CartDetails();
+            ct.Id = pd.Id;
+            ct.UserId = pd.UserId;
+            ct.ComboId = pd.ComboId;
+            ct.ProductDetailId = pd.ProductDetailId;
+            ct.Quantity = pd.Quantity;
+            await cartDetailService.PutCartDetailssAsync(ct);
+            return Ok(pd);
         }
-        [HttpPut("{ID}")]
-        public async Task<ActionResult<CartDetails>> PutCartDetails(Guid ID, CartDetails pd) // Update
+        [HttpPut("Put")]
+        public async Task<ActionResult<CartDetails>> PutCartDetails( CartDetailsViewModels cd) // Update
         {
-            await cartDetailService.PutCartDetailssAsync(pd); return Ok();
+            CartDetails cartdt = await cartDetailService.GetCartDetailssByIDAsync(cd.Id);
+            cartdt.ProductDetailId = cd.ProductDetailId;
+            cartdt.UserId = cd.UserId;
+            cartdt.ComboId = cd.ComboId;
+            cartdt.Quantity = cd.Quantity;
+            await cartDetailService.PutCartDetailssAsync(cartdt);
+            return Ok();
+               
         }
         [HttpDelete("{ID}")]
         public async Task<ActionResult<CartDetails>> DeleteCartDetails(Guid ID) // Delete theo Id
