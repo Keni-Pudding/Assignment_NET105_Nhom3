@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Assignment_NET105_Nhom3_API.DataContext;
 using Assignment_NET105_Nhom3_Shared.ViewModels;
 
-namespace Assignment_NET105_Nhom3_API.Controllers
+namespace Assignment_NET105_Nhom3_API.Controllers  /// o
 {
     [Route("api/bill")]
     [ApiController]
@@ -59,7 +59,7 @@ namespace Assignment_NET105_Nhom3_API.Controllers
 
 
 
-
+        
 
 
         [HttpGet("get-all-billdetails")]
