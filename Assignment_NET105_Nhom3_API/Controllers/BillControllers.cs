@@ -70,12 +70,12 @@ namespace Assignment_NET105_Nhom3_API.Controllers  /// ở đây có bill và bi
         }
 
         [HttpPost("add-billdetails")]
-        public async Task<ActionResult<BillDetailsViewModels>> AddBillDetails(BillDetailsViewModels bill)
+        public async Task<IActionResult> AddBillDetails(BillDetailsViewModels bill)
         {
             BillDetails bill1 = new BillDetails();
             bill1.Id = Guid.NewGuid();
             bill1.BillId = bill.Id;
-            if (bill.ComboId == Guid.Empty)
+            if (bill.ComboId == Guid.Empty || bill.ComboId==null)
             {
                 bill1.ProductDetailsId = bill.ProductDetailsId;
             }
@@ -86,27 +86,26 @@ namespace Assignment_NET105_Nhom3_API.Controllers  /// ở đây có bill và bi
             bill1.Price = bill.Price;
             bill1.Quantity  = bill.Quantity;
             await _billDetailServices.Add(bill1);
-            return Ok(bill1);
+            return Ok();
         }
 
         [HttpPut("update-billdetails")]
         public async Task<ActionResult<BillDetailsViewModels>> UpdateBillDetails(BillDetailsViewModels bill)
         {
-            BillDetails bill1 = new BillDetails();
-            bill1.Id = Guid.NewGuid();
-            bill1.BillId = bill.Id;
+            var a= await _billDetailServices.GetBillDetailById(bill.Id);         
+            a.BillId = bill.Id;
             if (bill.ComboId == Guid.Empty)
             {
-                bill1.ProductDetailsId = bill.ProductDetailsId;
+                a.ProductDetailsId = bill.ProductDetailsId;
             }
             else
             {
-                bill1.ComboId = bill.ComboId;
+                a.ComboId = bill.ComboId;
             }
-            bill1.Price = bill.Price;
-            bill1.Quantity = bill.Quantity;
-            await _billDetailServices.Add(bill1);
-            return Ok(bill1);
+            a.Price = bill.Price;
+            a.Quantity = bill.Quantity;
+            await _billDetailServices.Update(a);
+            return Ok(a);
         }
 
         [HttpDelete("delete-billdetails")]
