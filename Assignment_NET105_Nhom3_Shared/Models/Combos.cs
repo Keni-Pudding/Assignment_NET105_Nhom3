@@ -8,10 +8,10 @@
         public int Price { get; set; }
         public Guid CategoryId { get; set; }
         public int Status { get; set; }
-        public virtual IList<ComboDetails> ComboDetails { get; set; }
-        public virtual IList<CartDetails> CartDetails { get; set; }
-        public virtual IList<BillDetails> BillDetails { get; set; }
+        public virtual IList<ComboDetails>? ComboDetails { get; set; }
+        public virtual IList<CartDetails>? CartDetails { get; set; }
+        public virtual IList<BillDetails>? BillDetails { get; set; }
 
-        public virtual Category Category { get; set; }
+        public virtual Category? Category { get; set; }
     }
 }

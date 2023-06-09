@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Assignment_NET105_Nhom3_API.DataContext;
 using Assignment_NET105_Nhom3_Shared.ViewModels;
 
-namespace Assignment_NET105_Nhom3_API.Controllers  /// o
+namespace Assignment_NET105_Nhom3_API.Controllers  /// ở đây có bill và bill details
 {
     [Route("api/bill")]
     [ApiController]
@@ -89,7 +89,7 @@ namespace Assignment_NET105_Nhom3_API.Controllers  /// o
             return Ok(bill1);
         }
 
-        [HttpPost("update-billdetails")]
+        [HttpPut("update-billdetails")]
         public async Task<ActionResult<BillDetailsViewModels>> UpdateBillDetails(BillDetailsViewModels bill)
         {
             BillDetails bill1 = new BillDetails();
@@ -109,6 +109,13 @@ namespace Assignment_NET105_Nhom3_API.Controllers  /// o
             return Ok(bill1);
         }
 
+        [HttpDelete("delete-billdetails")]
+        public async Task<ActionResult> DeleteBillDetails(Guid Id)
+        {
+            var a = await _billDetailServices.GetBillDetailById(Id);
+            await _billDetailServices.Delete(a.Id);          
+            return Ok();
+        }
 
 
 

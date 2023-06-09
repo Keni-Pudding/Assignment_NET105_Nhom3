@@ -10,9 +10,9 @@
         public int Price { get; set; }
 
 
-        public virtual Bill Bill { get; set; } 
-        public virtual ProductDetails ProductDetails { get; set; }
-        public virtual Combos Combos { get; set; }
+        public virtual Bill? Bill { get; set; } 
+        public virtual ProductDetails? ProductDetails { get; set; }
+        public virtual Combos? Combos { get; set; }
 
     }
 }

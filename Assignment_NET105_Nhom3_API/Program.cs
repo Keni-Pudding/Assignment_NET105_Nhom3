@@ -20,6 +20,7 @@ builder.Services.AddTransient<IBillDetailServices, BillDetailServices>();
 builder.Services.AddTransient<IProductDetailsService, ProductDetailsService>();
 builder.Services.AddTransient<IShowProductsService, ShowProductService>();
 builder.Services.AddTransient<IColorServices, ColorServices>();
+builder.Services.AddTransient<ICartDetailService, CartDetailsService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

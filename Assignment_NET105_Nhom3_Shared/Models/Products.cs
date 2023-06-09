@@ -8,8 +8,8 @@
         public int Price { get; set; }
         public Guid CategoryId { get; set; }
         public int Status { get; set; }
-        public virtual Category Category { get; set; }
-        public virtual IList<ProductDetails> ProductDetails { get; set; }
+        public virtual Category? Category { get; set; }
+        public virtual IList<ProductDetails>? ProductDetails { get; set; }
 
 
 
