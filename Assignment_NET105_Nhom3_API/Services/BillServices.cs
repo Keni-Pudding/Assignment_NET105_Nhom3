@@ -12,17 +12,17 @@ namespace Assignment_NET105_Nhom3_API.Services
         {
             _context = context;
         }
-        public async Task<bool> Add(Bill bill)
+        public async Task<Bill> Add(Bill bill)
         {
             try
             {
                 await _context.Bill.AddAsync(bill);
                 await _context.SaveChangesAsync();
-                return true;
+                return bill;
             }
             catch (Exception e)
             {
-                return false;
+                return null;
             }
         }
 

@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Assignment_NET105_Nhom3\Assignment_NET105_Nhom3.csproj" />
     <ProjectReference Include="..\Assignment_NET105_Nhom3_Shared\Assignment_NET105_Nhom3_Shared.csproj" />
   </ItemGroup>
 

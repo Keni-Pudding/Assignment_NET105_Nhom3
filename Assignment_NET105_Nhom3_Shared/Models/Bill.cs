@@ -6,7 +6,7 @@
         public Guid UserId { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int Status { get; set; }
-        public virtual Customer Customer { get; set; }
-        public virtual IEnumerable<BillDetails> BillDetails { get; set; }
+        public virtual Customer? Customer { get; set; }
+        public virtual IEnumerable<BillDetails>? BillDetails { get; set; }
     }
 }
