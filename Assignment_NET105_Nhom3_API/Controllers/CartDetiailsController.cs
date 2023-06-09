@@ -37,7 +37,7 @@ namespace Assignment_NET105_Nhom3_API.Controllers
             ct.ComboId = pd.ComboId;
             ct.ProductDetailId = pd.ProductDetailId;
             ct.Quantity = pd.Quantity;
-            await cartDetailService.PutCartDetailssAsync(ct);
+            await cartDetailService.PostCartDetailssAsync(ct);
             return Ok(pd);
         }
         [HttpPut("Put")]
