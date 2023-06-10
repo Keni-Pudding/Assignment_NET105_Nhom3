@@ -1,0 +1,49 @@
+﻿ @model Assignment_NET105_Nhom3_Shared.ViewModels.RegisterUser
+<div class="Login full">
+	<div class=" container container1">
+		<div class="form login">
+			<span class="title">Sign Up</span>
+			<form asp-action="Register">
+				<div class="input-field">
+					<input type="text" placeholder="Email" asp-for="Email" name="user">
+
+				</div>
+				<div class="input-field">
+					<input type="text" placeholder="Username" asp-for="Name" name="user">
+
+				</div>
+				<div class="input-field">
+					<input type="text" placeholder="User" asp-for="Username" name="user">
+
+				</div>
+				<div class="input-field">
+					<input type="password" placeholder="Password" asp-for="Password" name="pass">
+
+				</div>
+				<div class="input-field">
+					<input type="password" placeholder="ConfirmPassword" asp-for="ConfirmPassword" name="pass">
+
+				</div>
+
+
+				<div class="input-field button">
+					<input type="submit" value="đăng ký">
+
+				</div>
+			</form>
+
+		</div>
+	</div>
+</div>
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+	<script type="text/javascript">
+		Swal.fire({
+			icon: 'error',
+			title: 'Đã có lỗi',
+			text: "@ViewBag.Message",
+			
+		})
+	</script>
+}
+

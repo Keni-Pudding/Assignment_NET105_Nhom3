@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Newtonsoft.Json;
+@{
+    string JsonData = Context.Session.GetString("role"); // Lấy data từ Session
+
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -10,88 +15,205 @@
     <link rel="stylesheet" href="~/css/detail.css" />
     <link rel="stylesheet" href="~/css/gioithieu.css" />
     <link rel="stylesheet" href="~/js/login.css" />
-    
+
     <link rel="stylesheet" href="~/css/giohang.css" />
     <link rel="stylesheet" href="~/js/CongTru.js" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
     <link rel="stylesheet" href="~/Assignment_ThangNVPH25980.styles.css" asp-append-version="true" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
-</head> 
+</head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid container">
-                <a class="navbar-brand"><img src="https://file.hstatic.net/200000312481/file/2222_1790556c641f404aab8dfb038b47eb0e.png" style="width:60%"></a>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item font">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item font">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Products1">Product</a>
-                        </li>
-                        <li class="nav-item font dropdown" style="margin-left: 30px;">
-                            <a class="nav-link text-dark dropdown-toggle" role="button" data-bs-toggle="dropdown">
-                                Managerment
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Management" asp-action="ProductList">Product Managerment</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="SignUp">Account Managerment</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Color" asp-action="ShowList">Color Managerment</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Size" asp-action="ShowList">Size Managerment</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Category" asp-action="ShowList">Category Managerment</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Bill">Bills Managerment</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item font">
-                            <a class="nav-link text-dark">SignUp</a>
-                        </li>
-                        <li class="nav-item font">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
-                        </li>
-                        <li class="nav-item font" style="margin-left: 300px; font-size: 23px;">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Cart"><i class="fa-solid fa-cart-shopping"></i></a>
-                        </li>
+    @if (JsonData == "user")
+    {
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container-fluid container">
+                    <a class="navbar-brand"><img src="https://file.hstatic.net/200000312481/file/2222_1790556c641f404aab8dfb038b47eb0e.png" style="width:60%"></a>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item font">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item font">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Products1">Product</a>
+                            </li>
 
-                        @{
-                            var acc = ViewBag.User;
-                        }
-                        <li class="nav-item font dropdown" style="margin-left: 30px; font-size: 23px;">
-                            <a class="nav-link text-dark dropdown-toggle" role="button" data-bs-toggle="dropdown">
-                                <i class="fa-solid fa-circle-user"></i>
-                                @if (acc == null)
-                                {
-                                    <span></span>
-                                }
-                                else
-                                {
-                                    <span class="font">@acc.UserName</span>
-                                }
-                            </a>
-                            <ul class="dropdown-menu">
-                                @if (acc == null)
-                                {
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Login">Login</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="SignUp">SignUp</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="LogOut">LogOut</a></li>
-                                }
-                                else
-                                {
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="LogOut">LogOut</a></li>
-                                }
+                            <li class="nav-item font">
+                                <a class="nav-link text-dark">SignUp</a>
+                            </li>
+                            <li class="nav-item font">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                            </li>
+                            <li class="nav-item font" style="margin-left: 300px; font-size: 23px;">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Cart"><i class="fa-solid fa-cart-shopping"></i></a>
+                            </li>
 
-                            </ul>
-                        </li>
-                    </ul>
+                            <li class="nav-item font dropdown" style="margin-left: 30px; font-size: 23px;">
+                                <a class="nav-link text-dark dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                                    <i class="fa-solid fa-circle-user"></i>
 
+                                </a>
+                                <ul class="dropdown-menu">
+
+
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="Login">Login</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Register" asp-action="Register">SignUp</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="Logout">LogOut</a></li>
+
+
+
+
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
 
-    </header>
+        </header>
+    }
+    else if (JsonData == "role")
+    {
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container-fluid container">
+                    <a class="navbar-brand"><img src="https://file.hstatic.net/200000312481/file/2222_1790556c641f404aab8dfb038b47eb0e.png" style="width:60%"></a>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item font">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item font">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Products1">Product</a>
+                            </li>
+
+                            <li class="nav-item font dropdown" style="margin-left: 30px;">
+                                <a class="nav-link text-dark dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                                    Managerment
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Management" asp-action="ProductList">Product Managerment</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="RegisterUser" asp-action="RegisterUser">Account Managerment</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Color" asp-action="ShowList">Color Managerment</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Size" asp-action="ShowList">Size Managerment</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Category" asp-action="ShowList">Category Managerment</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Bill">Bills Managerment</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item font">
+                                <a class="nav-link text-dark">SignUp</a>
+                            </li>
+                            <li class="nav-item font">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                            </li>
+                            <li class="nav-item font" style="margin-left: 300px; font-size: 23px;">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Cart"><i class="fa-solid fa-cart-shopping"></i></a>
+                            </li>
+
+                            @{
+                                var acc = ViewBag.User;
+                            }
+                            <li class="nav-item font dropdown" style="margin-left: 30px; font-size: 23px;">
+                                <a class="nav-link text-dark dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                                    <i class="fa-solid fa-circle-user"></i>
+                                    @if (acc == null)
+                                    {
+                                        <span></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="font">@acc.UserName</span>
+                                    }
+                                </a>
+                                <ul class="dropdown-menu">
+                                    @if (acc == null)
+                                    {
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="Login">Login</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Register" asp-action="Register">SignUp</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="Logout">LogOut</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="Logout">LogOut</a></li>
+                                    }
+
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </nav>
+
+        </header>
+    }
+    else
+    {
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container-fluid container">
+                    <a class="navbar-brand"><img src="https://file.hstatic.net/200000312481/file/2222_1790556c641f404aab8dfb038b47eb0e.png" style="width:60%"></a>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item font">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item font">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Products1">Product</a>
+                            </li>
+
+                            <li class="nav-item font">
+                                <a class="nav-link text-dark">SignUp</a>
+                            </li>
+                            <li class="nav-item font">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                            </li>
+                            <li class="nav-item font" style="margin-left: 300px; font-size: 23px;">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Cart"><i class="fa-solid fa-cart-shopping"></i></a>
+                            </li>
+
+                            @{
+                                var acc = ViewBag.User;
+                            }
+                            <li class="nav-item font dropdown" style="margin-left: 30px; font-size: 23px;">
+                                <a class="nav-link text-dark dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                                    <i class="fa-solid fa-circle-user"></i>
+                                    @if (acc == null)
+                                    {
+                                        <span></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="font">@acc.UserName</span>
+                                    }
+                                </a>
+                                <ul class="dropdown-menu">
+                                    @if (acc == null)
+                                    {
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="Login">Login</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Register" asp-action="Register">SignUp</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="Logout">LogOut</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="Logout">LogOut</a></li>
+                                    }
+
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </nav>
+
+        </header>
+    }
+
 
 
 
