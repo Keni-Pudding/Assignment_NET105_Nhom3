@@ -22,10 +22,17 @@ builder.Services.AddDbContext<MyDbContext>(option =>
 });
 builder.Services.AddTransient<IBillServices, BillServices>();
 builder.Services.AddTransient<IBillDetailServices, BillDetailServices>();
+builder.Services.AddTransient<ICategoryServices, CategoryServices>();
+builder.Services.AddTransient<ICombosService, ComBosService>();
+builder.Services.AddTransient<ICustomerService, CustomerService>();
+builder.Services.AddTransient<ISizeService, SizeService>();
+builder.Services.AddTransient<IRoleServices, RoleServices>();
+builder.Services.AddTransient<IProductServices, ProductServices>();
 builder.Services.AddTransient<IProductDetailsService, ProductDetailsService>();
 builder.Services.AddTransient<IShowProductsService, ShowProductService>();
 builder.Services.AddTransient<IColorServices, ColorServices>();
 builder.Services.AddTransient<ICartDetailService, CartDetailsService>();
+builder.Services.AddTransient<ICartService, CartService>();
 builder.Services.AddScoped<IRegisterService, RegisterService>();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddSwaggerGen(options =>
