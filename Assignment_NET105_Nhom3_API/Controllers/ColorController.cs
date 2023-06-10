@@ -23,6 +23,12 @@ namespace Assignment_NET105_Nhom3_API.Controllers
             var color = await _color.GetAllColor();
             return Ok(color);
         }
+        [HttpGet("Id")]
+        public async Task<ActionResult<Color>> GetColorById(Guid Id)
+        {
+            var color = await _color.GetColorById(Id);
+            return Ok(color);
+        }
         [HttpPost("add-Color")]
         public async Task<ActionResult<Color>> AddColor(ColorViewModel cl)
         {
