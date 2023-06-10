@@ -2,6 +2,7 @@
 using Assignment_NET105_Nhom3_Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace Assignment_NET105_Nhom3.Controllers
 {
@@ -13,12 +14,36 @@ namespace Assignment_NET105_Nhom3.Controllers
         {
             _logger = logger;
         }
-
-        public IActionResult Index()
+     
+        HttpClient httpClient = new HttpClient();
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
+            var client = new HttpClient();
+            var response = await client.GetAsync("https://localhost:7007/api/ShowProduct11");
+            var json = await response.Content.ReadAsStringAsync();
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            var productsD = JsonSerializer.Deserialize<List<Products>>(json, options);
+            ViewBag.ShowProduct = productsD;
+            return View(productsD);
+        }
+        [HttpGet]
+        public async Task<IActionResult> ShowProducts()
+        {
+            var client = new HttpClient();
+            var response = await client.GetAsync("https://localhost:7007/api/ShowProduct11");
+            var json = await response.Content.ReadAsStringAsync();
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            var productsD = JsonSerializer.Deserialize<List<Products>>(json, options);
+            ViewBag.ShowProduct = productsD;
             return View();
         }
-
         public IActionResult Privacy()
         {
             return View();

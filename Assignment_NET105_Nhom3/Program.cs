@@ -30,6 +30,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Management}/{action=ShowListProdcutDetail}");
+    pattern: "{controller=Home}/{action=Index}");
 
 app.Run();
