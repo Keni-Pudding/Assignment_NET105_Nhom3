@@ -74,7 +74,7 @@ namespace Assignment_NET105_Nhom3.Controllers
 
 
         [HttpGet("{Id}")]
-        public async Task<IActionResult> BillDetails(Guid Id)
+        public async Task<IActionResult> BillDetail(Guid Id)
         {
             var response = await _httpClient.GetAsync($"https://localhost:7007/api/bill/get-all-billdetails/{Id}");
             var a = await response.Content.ReadAsStringAsync();
