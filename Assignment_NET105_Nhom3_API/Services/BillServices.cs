@@ -57,18 +57,20 @@ namespace Assignment_NET105_Nhom3_API.Services
             throw new NotImplementedException();
         }
 
-        public Task<List<BillViewModel>> GetBillByNameViewModels()
+        public async Task<List<BillViewModel_Show>> GetBillViewShowModels()
         {
-            //var a = { from a in _context.Bill.ToList()
-            //         join b in _context.Customer.ToList() on a.UserId equals b.Id
-            //         select new BillViewModels()
-            //         {
-            //             ID = a.Id,
-                         
-            //         }.ToList();
-                     
-            //         }
-            throw new NotImplementedException();
+            var bd = await ( from a in _context.Bill
+                     join b in _context.Customer on a.UserId equals b.Id
+                     select new BillViewModel_Show()
+                     {
+                         Id = a.Id,
+                         UserName = b.UserName,
+                         CreatedDate= a.CreatedDate,
+                         Status= a.Status,
+
+                     }).ToListAsync();
+            return bd;
+
         }
 
         public async Task<Bill> Update(Bill bill)

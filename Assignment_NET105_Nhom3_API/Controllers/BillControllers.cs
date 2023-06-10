@@ -24,7 +24,7 @@ namespace Assignment_NET105_Nhom3_API.Controllers  /// ở đây có bill và bi
         [HttpGet("get-all-bill")]
         public async Task<IActionResult> GetAllBill()
         {
-            var a = await _billServices.GetAllBill();
+            var a = await _billServices.GetBillViewShowModels();
             return Ok(a);
         }
 
@@ -69,6 +69,12 @@ namespace Assignment_NET105_Nhom3_API.Controllers  /// ở đây có bill và bi
             var a = await _billDetailServices.GetAllBillDetail();
             return Ok(a);
         }
+        [HttpGet("get-all-billdetails/{id}")]
+        public async Task<IActionResult> GetAllBillDetailsByBill(Guid Id)
+        {
+            var a = await _billDetailServices.GetBillDetailtByBill(Id);
+            return Ok(a);
+        }
 
         [HttpPost("add-billdetails")]
         public async Task<IActionResult> AddBillDetails(BillDetailsViewModels bill)
@@ -79,10 +85,12 @@ namespace Assignment_NET105_Nhom3_API.Controllers  /// ở đây có bill và bi
             if (bill.ComboId == Guid.Empty || bill.ComboId==null)
             {
                 bill1.ProductDetailsId = bill.ProductDetailsId;
+                bill1.ComboId = null;
             }
             else
             {
                 bill1.ComboId = bill.ComboId;
+                bill1.ProductDetailsId = null;
             }                  
             bill1.Price = bill.Price;
             bill1.Quantity  = bill.Quantity;

@@ -5,7 +5,7 @@
     //List<ProductDetails> products = ViewBag.Products;
 }
 
-@model IEnumerable<Assignment_NET105_Nhom3_Shared.Models.BillDetails>
+@model IEnumerable<Assignment_NET105_Nhom3_Shared.ViewModels.BillDetailsViewModels_Show>
 
 <div class="table-wrapper" style="max-height: 500px; overflow-y: scroll;">
     <div style="margin-top:30px">
@@ -45,11 +45,11 @@
                            @*<img style="width:100px;height: 100px;" src="~/images/@a.ProductDetails.Products.Image"  />*@
                         </a>
                     </th>
-                    <th>@a.ProductDetails.Products.Name</th>
-                    <th>@a.ProductDetails.Size.Name</th>
-                    <th>@a.ProductDetails.Color.Name</th>
-                    <th>@a.Quantity</th>
-                    <th>@(a.ProductDetails.Products.Price*a.Quantity)</th>
+                    <th>@a.Productname</th>
+                    <th>@*@a.Size*@</th>
+                    <th>@*@a.Color*@</th>
+                    <th>@*@a.Quantity*@</th>
+                    <th>@*@a.Pric*@e</th>
                     <th></th>>
                     <th>
                         <a href="@Url.Action("DeleteProduct","Management",new{Id=a.Id})" style="text-decoration:none; color: white">

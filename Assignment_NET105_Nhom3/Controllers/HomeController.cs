@@ -67,22 +67,22 @@ namespace Assignment_NET105_Nhom3.Controllers
             {
                 PropertyNameCaseInsensitive = true
             };
-            List<Bill> bills = JsonSerializer.Deserialize<List<Bill>>(a, options);
+            List<BillViewModel_Show> bills = JsonSerializer.Deserialize<List<BillViewModel_Show>>(a, options);
             ViewBag.Bill = bills;
             return View(bills);
         }
 
 
-        [HttpGet]
-        public async Task<IActionResult> BillDetails()
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> BillDetails(Guid Id)
         {
-            var response = await _httpClient.GetAsync($"https://localhost:7007/api/bill/get-all-billdetails");
+            var response = await _httpClient.GetAsync($"https://localhost:7007/api/bill/get-all-billdetails/{Id}");
             var a = await response.Content.ReadAsStringAsync();
             var options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             };
-            List<BillDetails> billDetails = JsonSerializer.Deserialize<List<BillDetails>>(a, options);
+            List<BillDetailsViewModels_Show> billDetails = JsonSerializer.Deserialize<List<BillDetailsViewModels_Show>>(a, options);
             ViewBag.BillDetails = billDetails;
             return View(billDetails);
         }

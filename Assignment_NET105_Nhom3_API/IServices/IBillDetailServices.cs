@@ -1,4 +1,5 @@
 ﻿using Assignment_NET105_Nhom3_Shared.Models;
+using Assignment_NET105_Nhom3_Shared.ViewModels;
 
 namespace Assignment_NET105_Nhom3_API.IServices
 {
@@ -10,6 +11,7 @@ namespace Assignment_NET105_Nhom3_API.IServices
         public Task<List<BillDetails>> GetAllBillDetail();
         public Task<BillDetails> GetBillDetailById(Guid Id);
         public Task<List<BillDetails>> GetBillDetailtByName(string Name);
+        public Task<List<BillDetailsViewModels_Show>> GetBillDetailtByBill(Guid Id);
 
 
     }

@@ -1,7 +1,8 @@
 ﻿using Assignment_NET105_Nhom3_Shared.Models;
 using Assignment_NET105_Nhom3_API.DataContext;
 using Assignment_NET105_Nhom3_API.IServices;
-
+using Assignment_NET105_Nhom3_Shared.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace Assignment_NET105_Nhom3_API.Services
 {
@@ -46,9 +47,38 @@ namespace Assignment_NET105_Nhom3_API.Services
             return _context.BillDetails.ToList();
         }
 
+        public Task<List<BillDetails>> GetAllBillDetail(Guid userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<BillDetails> GetBillDetailById(Guid Id)
         {
             return await _context.BillDetails.FindAsync(Id);
+        }
+
+        public async Task<List<BillDetailsViewModels_Show>> GetBillDetailtByBill(Guid Id)
+        {
+            var bds = await (from a in _context.BillDetails
+                       join b in _context.Bill on a.BillId equals b.Id
+                       join c in _context.ProductDetails on a.ProductDetailsId equals c.Id
+                       join d in _context.Combos on a.ComboId equals d.Id
+                       join e in _context.Products on c.ProductId equals e.Id
+                             join f in _context.Size on c.SizeId equals f.Id
+                             join g in _context.Color on c.ColorId equals g.Id
+                             select new BillDetailsViewModels_Show
+                       {
+                           Id=a.Id,
+                           BillId=a.BillId,
+                           ProductName=e.Name,
+                           Image = e.Image,
+                           ComboName = d.Name,
+                           Size = e.Name,
+                           Color = g.Name,
+                           Quantity = a.Quantity,
+                           Price = e.Price * a.Quantity,
+                       }).ToListAsync();
+            return bds;
         }
 
         public async Task<List<BillDetails>> GetBillDetailtByName(string Name)
@@ -72,5 +102,6 @@ namespace Assignment_NET105_Nhom3_API.Services
                 return false;
             }
         }
+
     }
 }
