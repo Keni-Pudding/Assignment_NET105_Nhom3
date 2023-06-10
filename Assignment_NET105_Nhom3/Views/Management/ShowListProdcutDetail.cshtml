@@ -1,4 +1,4 @@
-﻿@model Assignment_NET105_Nhom3_Shared.Models.ProductDetails
+﻿@model IEnumerable<Assignment_NET105_Nhom3_Shared.ViewModels.ProductDetailsViewModels_Show>
 
 <div class="table-wrapper" style="max-height: 500px; overflow-y: scroll;">
     <div style="margin-top=30px">
@@ -28,13 +28,13 @@
                 @{
                     int count = 1;
                 }
-                @foreach (var a in ViewBag.ProductDetails)
+                @foreach (var a in Model)
                 {
                     <tr>
                         <th>@(count++)</th>
                         <th>
                             <a href="@Url.Action("Details","Management",new{Id=a.Id})" style="text-decoration:none; color: white">
-                                <img src="/images/@a.Products.Image" alt="" style="width:100px;height: 100px;">
+                                <img src="/images/@a.Image" alt="" style="width:100px;height: 100px;">
                             </a>
                         </th>
 
@@ -46,10 +46,10 @@
                         {
                             <th>@a.Products.Name</th>
                         }*@
-                        <th>@a.Products.Name</th>
-                        <th>@a.Products.Price</th>
-                        <th>@a.Color.Name</th>
-                        <th>@a.Size.Name</th>
+                        <th>@a.ProductName</th>
+                        <th>@a.Price</th>
+                        <th>@a.ColorName</th>
+                        <th>@a.SizeName</th>
                         <th>@a.AvaiableQuatity</th>
                         <th>@a.Status</th>
                         <th>

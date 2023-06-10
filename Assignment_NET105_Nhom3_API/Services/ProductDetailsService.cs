@@ -3,6 +3,7 @@ using Assignment_NET105_Nhom3_API.DataContext;
 using Assignment_NET105_Nhom3_API.IServices;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using Assignment_NET105_Nhom3_Shared.ViewModels;
 
 namespace Assignment_NET105_Nhom3_API.Services
 {
@@ -24,7 +25,8 @@ namespace Assignment_NET105_Nhom3_API.Services
 
         public List<ProductDetails> GetAllProductDetails()
         {
-            return _context.ProductDetails.ToList();
+            var x = _context.ProductDetails.ToList();
+            return x;
         }
 
         public async Task<List<ProductDetails>> GetAllProductDetailsAsync()
@@ -64,6 +66,32 @@ namespace Assignment_NET105_Nhom3_API.Services
 
             await _context.SaveChangesAsync();
             return x;
+        }
+
+        public List<ProductDetailsViewModels_Show> GetAllProductDetailsByProductID_View(Guid id)
+        {
+            var pd_Show = (from pd in _context.ProductDetails.ToList()
+                           join s in _context.Size.ToList() on pd.SizeId equals s.Id
+                           join c in _context.Color.ToList() on pd.ColorId equals c.Id
+                           join p in _context.Products.ToList() on pd.ProductId equals p.Id
+                           join cate in _context.Category.ToList() on p.CategoryId equals cate.Id
+                           select new ProductDetailsViewModels_Show()
+                           {
+                               Id = pd.Id,
+                               ProductId = p.Id,
+                               ProductName = p.Name,
+                               ColorId = c.Id,
+                               ColorName = c.Name,
+                               SizeId = s.Id,
+                               SizeName = s.Name,
+                               AvaiableQuatity = pd.AvaiableQuatity,
+                               Status = pd.Status,
+                               CategoryId = cate.Id,
+                               CategoryName = cate.Name,
+                               Image = p.Image,
+                               Price = p.Price,
+                           }).Where(c => c.ProductId == id).ToList();
+            return pd_Show;
         }
     }
 }

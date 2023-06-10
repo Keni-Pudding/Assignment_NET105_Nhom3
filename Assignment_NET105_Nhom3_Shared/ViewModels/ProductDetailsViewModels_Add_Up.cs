@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assignment_NET105_Nhom3_Shared.ViewModels
 {
-    public class ProductDetailsViewModels
+    public class ProductDetailsViewModels_Add_Up
     {
         public Guid Id { get; set; }
         public Guid? ProductId { get; set; }

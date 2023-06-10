@@ -16,8 +16,14 @@ namespace Assignment_NET105_Nhom3_API.Controllers
         {
             _productDetailsService = productDetailsService;
         }
+        [HttpGet("getAllByProductID")]
+        public IActionResult GetAllProductDetails(Guid id) //  Lấy danh sách data
+        {
+            var result = _productDetailsService.GetAllProductDetailsByProductID_View(id);
+            return Ok(result);
+        }
         [HttpGet]
-        public async Task<ActionResult<ProductDetails>> GetAllProductDetails() //  Lấy danh sách data
+        public async Task<ActionResult<ProductDetails>> GetAllProductDetailsAsync() //  Lấy danh sách data
         {
             var result = await _productDetailsService.GetAllProductDetailsAsync();
             return Ok(result);
@@ -29,7 +35,7 @@ namespace Assignment_NET105_Nhom3_API.Controllers
             return Ok(result);
         }
         [HttpPost("add-ProductDetails")]
-        public async Task<ActionResult<ProductDetails>> PostProductDetails(ProductDetailsViewModels pdvm) // Tạo mới
+        public async Task<ActionResult<ProductDetails>> PostProductDetails(ProductDetailsViewModels_Add_Up pdvm) // Tạo mới
         {
             ProductDetails pd = new ProductDetails();
             pd.Id = Guid.NewGuid();
@@ -42,7 +48,7 @@ namespace Assignment_NET105_Nhom3_API.Controllers
             return Ok(result);
         }
         [HttpPut("update-ProductDetails")]
-        public async Task<ActionResult<ProductDetails>> PutProductDetails(ProductDetailsViewModels pdvm) // Update
+        public async Task<ActionResult<ProductDetails>> PutProductDetails(ProductDetailsViewModels_Add_Up pdvm) // Update
         {
             ProductDetails pd = await _productDetailsService.GetProductDetailsByIDAsync(pdvm.Id);
             pd.ProductId = pdvm.ProductId;
