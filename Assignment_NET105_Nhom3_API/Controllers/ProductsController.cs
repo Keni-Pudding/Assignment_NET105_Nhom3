@@ -1,4 +1,5 @@
 ﻿using Assignment_NET105_Nhom3_API.IServices;
+using Assignment_NET105_Nhom3_API.Services;
 using Assignment_NET105_Nhom3_Shared.Models;
 using Assignment_NET105_Nhom3_Shared.ViewModels;
 using Microsoft.AspNetCore.Http;
@@ -57,6 +58,12 @@ namespace Assignment_NET105_Nhom3_API.Controllers
         {
             await _prd.DeleteProduct(Id);
             return Ok();
+        }
+        [HttpGet("getAllProduct")]
+        public IActionResult GetAllProductDetails() //  Lấy danh sách data
+        {
+            var result = _prd.GetAllProducts_Show();
+            return Ok(result);
         }
     }
 }

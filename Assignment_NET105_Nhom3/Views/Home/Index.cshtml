@@ -21,9 +21,10 @@
         @foreach (var a in ViewBag.ShowProduct)
         {
             <div class="col-md-3">
+                <a href="@Url.Action("ShowListProdcutDetail","Management",new{Id=@a.Id})" style="text-decoration:none; color: white">
                 <img src="@a.Image"
                  class="img-thumbnail " alt="Cinque Terre"><h6>@a.Name</h6>
-                <center>  <h6 style="color: red;">@a.Price  <del style="color:midnightblue">230.000 đ</del></h6></center>
+                <center>  <h6 style="color: red;">@a.Price  <del style="color:midnightblue">230.000 đ</del></h6></center></a>
             </div>           
         }          
     </div>   

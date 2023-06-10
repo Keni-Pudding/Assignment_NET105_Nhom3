@@ -1,10 +1,5 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-
-@model IEnumerable<Assignment_NET105_Nhom3_Shared.Models.Products>
+﻿
+@model IEnumerable<Assignment_NET105_Nhom3_Shared.ViewModels.ProductViewModels_Show>
 
 <div class="table-wrapper" style="max-height: 500px; overflow-y: scroll;">
     <div style="margin-top=30px">
@@ -45,7 +40,7 @@
                         </a>
                     </th>
                     <th>@a.Name</th>
-                    <th>@a.Category.Name</th>
+                    <th>@a.CategoryName</th>
                     <th>@a.Price</th>
                     <th>@a.Status</th>
                     <th>

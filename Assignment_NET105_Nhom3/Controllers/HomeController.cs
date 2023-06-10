@@ -1,5 +1,7 @@
 ﻿using Assignment_NET105_Nhom3.Models;
+using Assignment_NET105_Nhom3_API.Services;
 using Assignment_NET105_Nhom3_Shared.Models;
+using Assignment_NET105_Nhom3_Shared.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Text.Json;
@@ -75,6 +77,20 @@ namespace Assignment_NET105_Nhom3.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Products1()
+        {
+            var client = new HttpClient();
+            var response = await client.GetAsync($"https://localhost:7007/api/Products/getAllProduct");
+            var json = await response.Content.ReadAsStringAsync();
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            var productsD = JsonSerializer.Deserialize<List<ProductViewModels_Show>>(json, options);
+            //List<ProductView> products = productServices.GetAllProductView();
+            ViewBag.Products = productsD;
+            return View(productsD);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

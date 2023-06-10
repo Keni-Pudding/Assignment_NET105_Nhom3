@@ -1,6 +1,7 @@
 ﻿using Assignment_NET105_Nhom3_API.DataContext;
 using Assignment_NET105_Nhom3_API.IServices;
 using Assignment_NET105_Nhom3_Shared.Models;
+using Assignment_NET105_Nhom3_Shared.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Assignment_NET105_Nhom3_API.Services
@@ -24,6 +25,23 @@ namespace Assignment_NET105_Nhom3_API.Services
         public async Task<IEnumerable<Products>> GetAllProduct()
         {
             return await _context.Products.ToListAsync();
+        }
+
+        public List<ProductViewModels_Show> GetAllProducts_Show()
+        {
+            var p_Show = (from p in _context.Products.ToList()
+                           join c in _context.Category.ToList() on p.CategoryId equals c.Id
+                           select new ProductViewModels_Show()
+                           {
+                               Id = p.Id,
+                               Name = p.Name,
+                               Image = p.Image,
+                               Price = p.Price,
+                               CategoryId = c.Id,
+                               CategoryName = c.Name,
+                               Status = p.Status
+                           }).ToList();
+            return p_Show;
         }
 
         public async Task<Products> GetProductsById(Guid Id)

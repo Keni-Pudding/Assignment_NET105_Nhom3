@@ -23,13 +23,28 @@ namespace Assignment_NET105_Nhom3.Controllers
         public async Task<IActionResult> ShowListProdcutDetail(Guid id)
         {
             var client = new HttpClient();
-            var response = await client.GetAsync($"https://localhost:7007/api/ProductDetails/getAllByProductID?id=A8426F69-513A-46D0-AB5B-9254D71B02EE");
+            var response = await client.GetAsync($"https://localhost:7007/api/ProductDetails/getAllByProductID?id={id}");
             var json = await response.Content.ReadAsStringAsync();
             var options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             };
             var productsD = JsonSerializer.Deserialize<List<ProductDetailsViewModels_Show>>(json, options);
+
+            return View(productsD);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ProductList()
+        {
+            var client = new HttpClient();
+            var response = await client.GetAsync($"https://localhost:7007/api/Products/getAllProduct");
+            var json = await response.Content.ReadAsStringAsync();
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            var productsD = JsonSerializer.Deserialize<List<ProductViewModels_Show>>(json, options);
 
             return View(productsD);
         }
