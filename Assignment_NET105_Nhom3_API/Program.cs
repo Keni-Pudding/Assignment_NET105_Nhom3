@@ -33,6 +33,7 @@ builder.Services.AddTransient<IShowProductsService, ShowProductService>();
 builder.Services.AddTransient<IColorServices, ColorServices>();
 builder.Services.AddTransient<ICartDetailService, CartDetailsService>();
 builder.Services.AddTransient<ICartService, CartService>();
+builder.Services.AddTransient<IComBoDetailsServices, ComboDetailsServices>();
 builder.Services.AddScoped<IRegisterService, RegisterService>();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddSwaggerGen(options =>
