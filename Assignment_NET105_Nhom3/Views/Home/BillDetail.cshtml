@@ -45,7 +45,7 @@
                            @*<img style="width:100px;height: 100px;" src="~/images/@a.ProductDetails.Products.Image"  />*@
                         </a>
                     </th>
-                    <th>@a.Productname</th>
+                    <th>@a.ProductName</th>
                     <th>@*@a.Size*@</th>
                     <th>@*@a.Color*@</th>
                     <th>@*@a.Quantity*@</th>
@@ -65,7 +65,7 @@
 
                     </th>
                     @{
-                            total+=(a.ProductDetails.Products.Price * a.Quantity);
+                            //total+=(a.ProductDetails.Products.Price * a.Quantity);
                         }
 
                 </tr>
