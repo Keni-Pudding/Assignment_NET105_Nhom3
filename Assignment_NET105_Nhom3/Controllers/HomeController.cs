@@ -11,18 +11,18 @@ namespace Assignment_NET105_Nhom3.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly HttpClient _httpClient;
+        public HomeController(ILogger<HomeController> logger, HttpClient httpClient)
         {
             _logger = logger;
+            _httpClient = httpClient;
         }
-     
-        HttpClient httpClient = new HttpClient();
+
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             var client = new HttpClient();
-            var response = await client.GetAsync("https://localhost:7007/api/ShowProduct11");
+            var response = await _httpClient.GetAsync("https://localhost:7007/api/ShowProduct11");
             var json = await response.Content.ReadAsStringAsync();
             var options = new JsonSerializerOptions
             {
@@ -36,7 +36,7 @@ namespace Assignment_NET105_Nhom3.Controllers
         public async Task<IActionResult> ShowProducts()
         {
             var client = new HttpClient();
-            var response = await client.GetAsync("https://localhost:7007/api/ShowProduct11");
+            var response = await _httpClient.GetAsync("https://localhost:7007/api/ShowProduct11");
             var json = await response.Content.ReadAsStringAsync();
             var options = new JsonSerializerOptions
             {
@@ -58,15 +58,34 @@ namespace Assignment_NET105_Nhom3.Controllers
         {
             return View();
         }
-        public IActionResult Bill()
-        {
-            return View();
-        }
         [HttpGet]
-        //public IActionResult Bill()
-        //{
+        public async Task<IActionResult> Bill()
+        {
+            var response = await _httpClient.GetAsync($"https://localhost:7007/api/bill/get-all-bill");
+            var a = await response.Content.ReadAsStringAsync();
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            List<Bill> bills = JsonSerializer.Deserialize<List<Bill>>(a, options);
+            ViewBag.Bill = bills;
+            return View(bills);
+        }
 
-        //}
+
+        [HttpGet]
+        public async Task<IActionResult> BillDetails()
+        {
+            var response = await _httpClient.GetAsync($"https://localhost:7007/api/bill/get-all-billdetails");
+            var a = await response.Content.ReadAsStringAsync();
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            List<BillDetails> billDetails = JsonSerializer.Deserialize<List<BillDetails>>(a, options);
+            ViewBag.BillDetails = billDetails;
+            return View(billDetails);
+        }
 
         public IActionResult Cart()
         {

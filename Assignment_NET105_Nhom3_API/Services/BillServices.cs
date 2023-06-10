@@ -2,6 +2,7 @@
 using Assignment_NET105_Nhom3_API.DataContext;
 using Assignment_NET105_Nhom3_API.IServices;
 using Microsoft.EntityFrameworkCore;
+using Assignment_NET105_Nhom3_Shared.ViewModels;
 
 namespace Assignment_NET105_Nhom3_API.Services
 {
@@ -53,6 +54,20 @@ namespace Assignment_NET105_Nhom3_API.Services
 
         public async Task<List<Bill>> GetBillByName(string Name)
         {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<BillViewModel>> GetBillByNameViewModels()
+        {
+            //var a = { from a in _context.Bill.ToList()
+            //         join b in _context.Customer.ToList() on a.UserId equals b.Id
+            //         select new BillViewModels()
+            //         {
+            //             ID = a.Id,
+                         
+            //         }.ToList();
+                     
+            //         }
             throw new NotImplementedException();
         }
 

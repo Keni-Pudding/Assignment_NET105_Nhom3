@@ -31,13 +31,13 @@
             @{
                 int count = 1;
             }
-            @foreach (var a in  ViewBag.Bills )
+            @foreach (var a in  ViewBag.Bill )
             {
                 <tr>
                     <th>@(count++)</th>
                     <th>
                         <a href="@Url.Action("BillDetail","Home",new{billId=a.Id})" style="text-decoration:none; color: white">
-                           @a.Accounts.UserName
+                           @*@a.Customer.UserName*@
                         </a>
                     </th>
                     <th>@a.CreatedDate</th>

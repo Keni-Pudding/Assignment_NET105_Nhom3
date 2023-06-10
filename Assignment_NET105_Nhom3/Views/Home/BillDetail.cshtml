@@ -42,7 +42,7 @@
                     
                     <th>
                         <a @*href="@Url.Action("Details","Management",new{Id=a.Id})"*@ style="text-decoration:none; color: white">
-                           <img style="width:100px;height: 100px;" src="~/images/@a.ProductDetails.Products.Image"  />
+                           @*<img style="width:100px;height: 100px;" src="~/images/@a.ProductDetails.Products.Image"  />*@
                         </a>
                     </th>
                     <th>@a.ProductDetails.Products.Name</th>

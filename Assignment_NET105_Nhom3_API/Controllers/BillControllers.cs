@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Assignment_NET105_Nhom3_API.DataContext;
 using Assignment_NET105_Nhom3_Shared.ViewModels;
+using System.Web.Http.OData;
 
 namespace Assignment_NET105_Nhom3_API.Controllers  /// ở đây có bill và bill details
 {
@@ -19,7 +20,7 @@ namespace Assignment_NET105_Nhom3_API.Controllers  /// ở đây có bill và bi
             _billServices = billServices;
             _billDetailServices = billDetailServices;
         }
-
+        [EnableQuery]
         [HttpGet("get-all-bill")]
         public async Task<IActionResult> GetAllBill()
         {
