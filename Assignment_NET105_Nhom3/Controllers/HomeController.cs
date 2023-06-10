@@ -73,17 +73,18 @@ namespace Assignment_NET105_Nhom3.Controllers
         }
 
 
-        [HttpGet("{Id}")]
+        [HttpGet]
         public async Task<IActionResult> BillDetail(Guid Id)
         {
-            var response = await _httpClient.GetAsync($"https://localhost:7007/api/bill/get-all-billdetails/{Id}");
+
+            var response = await _httpClient.GetAsync($"https://localhost:7007/api/bill/get-all-billdetails/{Id}"); 
             var a = await response.Content.ReadAsStringAsync();
             var options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             };
             List<BillDetailsViewModels_Show> billDetails = JsonSerializer.Deserialize<List<BillDetailsViewModels_Show>>(a, options);
-            ViewBag.BillDetails = billDetails;
+            ViewBag.BillDetails = billDetails;         
             return View(billDetails);
         }
 
@@ -115,6 +116,98 @@ namespace Assignment_NET105_Nhom3.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+
+        public async Task<IActionResult> DetailShop(Guid Id)
+        {
+
+            var client = new HttpClient();
+            var response = await client.GetAsync("https://localhost:7007/api/Products/Id?Id=" + Id.ToString() + "\r\n");
+            var json = await response.Content.ReadAsStringAsync();
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            var productsD = JsonSerializer.Deserialize<Products>(json, options);
+            ViewBag.ShowProduct = productsD;
+
+            //ShowSize and Color
+            List<Color> colors = new List<Color>();
+            List<Size> sizes = new List<Size>();
+            // getall colors
+            var response1 = await _httpClient.GetAsync("https://localhost:7007/api/color");
+            var json1 = await response1.Content.ReadAsStringAsync();
+            var options1 = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            var _lstColor = JsonSerializer.Deserialize<List<Color>>(json1, options1);
+            // getall productdetails
+            var response3 = await _httpClient.GetAsync("https://localhost:7007/api/ProductDetails");
+            var json3 = await response3.Content.ReadAsStringAsync();
+            var options3 = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            var _lstProductDetails = JsonSerializer.Deserialize<List<ProductDetails>>(json3, options3);
+
+            // getall size
+            var response2 = await _httpClient.GetAsync("https://localhost:7007/api/Size");
+            var json2 = await response2.Content.ReadAsStringAsync();
+            var options2 = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            var _lstSize = JsonSerializer.Deserialize<List<Size>>(json2, options2);
+            var a = _lstProductDetails.Where(x => x.ProductId == Id).ToList();
+            int dem = 0;
+            int dem1 = 0;
+            for (int i = 0; i < a.Count(); i++)
+            {
+                if (colors.Count() == 0)
+                {
+                    colors.Add(_lstColor.Where(x => x.Id == a[i].ColorId).FirstOrDefault());
+                }
+                for (int l = 0; l < colors.Count(); l++)
+                {
+                    if (colors[l].Id == _lstColor.Where(x => x.Id == a[i].ColorId).FirstOrDefault().Id)
+                    {
+                        dem = dem + 1;
+                    }
+                }
+                if (dem == 0)
+                {
+
+                    colors.Add(_lstColor.Where(x => x.Id == a[i].ColorId).FirstOrDefault());
+                    // break;
+                }
+                dem = 0;
+            }
+            for (int k = 0; k < a.Count(); k++)
+            {
+                if (sizes.Count() == 0)
+                {
+                    sizes.Add(_lstSize.Where(x => x.Id == a[k].SizeId).FirstOrDefault());
+                }
+                for (int n = 0; n < sizes.Count(); n++)
+                {
+                    if (sizes[n].Id == _lstSize.Where(x => x.Id == a[k].SizeId).FirstOrDefault().Id)
+                    {
+                        dem1 = dem1 + 1;
+                    }
+                }
+                if (dem1 == 0)
+                {
+
+                    sizes.Add(_lstSize.Where(x => x.Id == a[k].SizeId).FirstOrDefault());
+                    // break;
+                }
+                dem1 = 0;
+            }
+            ViewBag.color = colors;
+            ViewBag.size = sizes;
+            return View(productsD);
         }
     }
 }
