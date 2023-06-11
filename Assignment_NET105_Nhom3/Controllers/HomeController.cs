@@ -4,6 +4,7 @@ using Assignment_NET105_Nhom3_Shared.Models;
 using Assignment_NET105_Nhom3_Shared.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Text;
 using System.Text.Json;
 
 namespace Assignment_NET105_Nhom3.Controllers
@@ -77,14 +78,14 @@ namespace Assignment_NET105_Nhom3.Controllers
         public async Task<IActionResult> BillDetail(Guid Id)
         {
 
-            var response = await _httpClient.GetAsync($"https://localhost:7007/api/bill/get-all-billdetails/{Id}"); 
+            var response = await _httpClient.GetAsync($"https://localhost:7007/api/bill/get-all-billdetails/{Id}");
             var a = await response.Content.ReadAsStringAsync();
             var options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             };
             List<BillDetailsViewModels_Show> billDetails = JsonSerializer.Deserialize<List<BillDetailsViewModels_Show>>(a, options);
-            ViewBag.BillDetails = billDetails;         
+            ViewBag.BillDetails = billDetails;
             return View(billDetails);
         }
 
@@ -208,6 +209,127 @@ namespace Assignment_NET105_Nhom3.Controllers
             ViewBag.color = colors;
             ViewBag.size = sizes;
             return View(productsD);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddToCart(Guid ProductId, Guid ColorID, Guid SizeID, int quantity, CartDetails addcartDetails)
+        {
+            //check xem guest hay không 
+            var Rolename = HttpContext.Session.GetString("role");
+            if (Rolename == null)
+            {
+                //check sản phẩm có tồn tại không 
+                // lấy list productdetail của product
+                var response1 = await _httpClient.GetAsync("https://localhost:7007/api/ProductDetails/getAllByProductID?id=" + ProductId.ToString());
+                var json1 = await response1.Content.ReadAsStringAsync();
+                var options1 = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                var _lstProductDetails = JsonSerializer.Deserialize<List<ProductDetails>>(json1, options1);
+                //check sản phẩm có tồn tại không 
+                var ProductDetails = _lstProductDetails.Where(x => x.ColorId == ColorID && x.SizeId == SizeID).FirstOrDefault();
+                if (ProductDetails == null)
+                {
+                    return Content("Sản phẩm hết hàng");
+                }
+                else if (ProductDetails.AvaiableQuatity <= 0)
+                {
+                    return Content("Sản phẩm hết hàng");
+                }
+                else
+                {
+                    // Khi có sản phẩm đó và số lượng còn trên 0 tiến hành add vào giỏ hàng 
+                    //check xem số lượng có đủ để bán không 
+                    if (ProductDetails.AvaiableQuatity < quantity)
+                    {
+                        return Content("Sản phẩm không đủ số lượng bạn mong muốn");
+                    }
+                    //check xem giỏ hàng có sản phẩm hay chưa 
+                    var response2 = await _httpClient.GetAsync("https://localhost:7007/api/CartDetailsController/" + ProductDetails.ToString());
+                    var json2 = await response2.Content.ReadAsStringAsync();
+                    var options2 = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    var CartDetails = JsonSerializer.Deserialize<ProductDetails>(json2, options2);
+                    if (CartDetails != null) //sản phẩm đó còn số lượng đủ bán và sản phẩm chưa có giỏ hàng
+                    {
+                        HttpClient client = new HttpClient();
+                        addcartDetails.Id = Guid.NewGuid();
+                        addcartDetails.UserId = Guid.Parse("444ACB59-28B1-4067-AD85-281DC7C973F1"); // id của khách vãng lai
+                        addcartDetails.ProductDetailId = ProductDetails.Id;
+                        addcartDetails.Quantity = quantity;
+                        var content = System.Text.Json.JsonSerializer.Serialize(addcartDetails);
+
+                        var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
+                        // Call API
+                        var postResult = await client.PostAsync($"https://localhost:7007/api/CartDetailsController/Add", bodyContent);
+                        return Content("Đã add thành công");
+                    }
+                }
+            }
+            else 
+            {
+                //check sản phẩm có tồn tại không 
+                // lấy list productdetail của product
+                var response1 = await _httpClient.GetAsync("https://localhost:7007/api/ProductDetails/getAllByProductID?id=" + ProductId.ToString());
+                var json1 = await response1.Content.ReadAsStringAsync();
+                var options1 = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                var _lstProductDetails = JsonSerializer.Deserialize<List<ProductDetails>>(json1, options1);
+                //check sản phẩm có tồn tại không 
+                var ProductDetails = _lstProductDetails.Where(x => x.ColorId == ColorID && x.SizeId == SizeID).FirstOrDefault();
+                if (ProductDetails == null)
+                {
+                    return Content("Sản phẩm hết hàng");
+                }
+                else if (ProductDetails.AvaiableQuatity <= 0)
+                {
+                    return Content("Sản phẩm hết hàng");
+                }
+                else
+                {
+                    // Khi có sản phẩm đó và số lượng còn trên 0 tiến hành add vào giỏ hàng 
+                    //check xem số lượng có đủ để bán không 
+                    if (ProductDetails.AvaiableQuatity < quantity)
+                    {
+                        return Content("Sản phẩm không đủ số lượng bạn mong muốn");
+                    }
+                    //check xem nó có giỏ hàng chưa
+                    //check xem giỏ hàng có sản phẩm hay chưa 
+                    var response2 = await _httpClient.GetAsync("https://localhost:7007/api/CartDetailsController/" + ProductDetails.ToString());
+                    var json2 = await response2.Content.ReadAsStringAsync();
+                    var options2 = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    var CartDetails = JsonSerializer.Deserialize<ProductDetails>(json2, options2);
+                    if (CartDetails != null) //sản phẩm đó còn số lượng đủ bán và sản phẩm chưa có giỏ hàng
+                    {
+                        var UserId = HttpContext.Session.GetString("UserId");
+                        HttpClient client = new HttpClient();
+                        addcartDetails.Id = Guid.NewGuid();
+                        addcartDetails.UserId = Guid.Parse(UserId);
+                        addcartDetails.ProductDetailId = ProductDetails.Id;
+                        addcartDetails.Quantity = quantity;
+                        var content = System.Text.Json.JsonSerializer.Serialize(addcartDetails);
+
+                        var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
+                        // Call API
+                        var postResult = await client.PostAsync($"https://localhost:7007/api/CartDetailsController/Add", bodyContent);
+                        return Content("Đã add thành công");
+                    }
+                }
+            }
+            return RedirectToAction("Index");
+            //check sản phẩm có tồn tại không 
+            //check xem nó có giỏ hàng hay chưa 
+            //check xem giỏ hàng có sản phẩm hay chưa 
+
+            // var Rolename = HttpContext.Session.GetString("role");
+
         }
     }
 }

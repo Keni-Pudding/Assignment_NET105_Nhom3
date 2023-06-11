@@ -4,7 +4,7 @@
     ViewData["Title"] = "DetailShop";
 }
 
-<form action="@Url.Action("Cart","Home",new{ IdPro = @Model.Id})" method="post">
+
 
 
     <div class="container" style="margin-top: 50px;">
@@ -32,85 +32,44 @@
                             </div>
                         </div>
                     </div>
-                 @*   <div class="row">
-                        <div class="col-md-4">
-                            <div class="Mausac">
-                                <h5>Màu sắc</h5>
+
+                    <form asp-action="AddToCart">
+                    <input value="@Model.Id" name="ProductId" />
+                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                            @foreach (var a in ViewBag.color)
+                            {
+                                <input type="radio" class="btn-check" name="ColorID" id="@a.Id" value="@a.Id">
+                                <label class="btn btn-outline-primary" for="@a.Id">@a.Name</label>
+                            }
+                        </div>
+                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                            @foreach (var a in ViewBag.size)
+                            {
+                                <input type="radio" class="btn-check" name="SizeId" id="@a.Id" value="@a.Id">
+                                <label class="btn btn-outline-primary" for="@a.Id">@a.Name</label>
+                            }
+                        </div>
+                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                            <div class="mb-3">
+                                <input type="text"
+                                       id="quantity"
+                                       name="quantity"
+                                       value="1"
+                                       style="width: 100%; text-align: center" />
                             </div>
                         </div>
-                        <div class="col-md-col8" style="margin-left: 100px;">
-                            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    @foreach (var a in ViewBag.color)
-                    {
-                    <input type="radio" class="btn-check" name="ColorID" id="@a.ID" value="@a.ID">
-                    <label class="btn btn-outline-primary" for="@a.ID">@a.Name</label>
-                    }
-                    </div>
-
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="Mausac">
-                                <h5>Size</h5>
-                            </div>
-                        </div>
-                        <div class="col-md-col8" style="margin-left: 100px;">
-                            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                @foreach (var a in ViewBag.Sizes)
-                                {
-                                    <input type="radio" class="btn-check" id="@a.Id" autocomplete="off" name="SizeId" value="@a.Id">
-                                    <label class="btn btn-outline-primary" for="@a.Id">@a.Name</label>
-                                }
+                        <div>
+                            <div class="col-sm-10">
                             </div>
 
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="Mausac">
-                                <h5>Số lượng</h5>
-                            </div>
-                        </div>
-                        <div class="col-md-col8" style="margin-left: 100px;">
-                            <button type="button" class="btn btn-default btn_size1"><i class="fa-solid fa-minus"></i></button>
-                            <input type="number" class="" value="1" min="1" max="100" name="quantity"></input>
-                            <button type="button" class="btn btn-default btn_size1"><i class="fa-solid fa-plus"></i></button>
+                            <button type="submit" class="btn btn-warning btn_size2">Add to Cart</button>
 
                         </div>
-                    </div>*@
-                       <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                        @foreach (var a in ViewBag.color)
-                                        {
-                            <input type="radio" class="btn-check" name="ColorID" id="@a.Id" value="@a.Id">
-                            <label class="btn btn-outline-primary" for="@a.Id">@a.Name</label>
-                                        }
-                                    </div>
-                    <div>
-                          <div class="col-sm-10">
+                    </form>
 
-                                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                @foreach (var a in ViewBag.size)
-                                {
-                                    <input type="radio" class="btn-check" name="SizeId" id="@a.Id" value="@a.Id">
-                                    <label class="btn btn-outline-primary" for="@a.Id">@a.Name</label>
-                                }
-                                    </div>
-
-                                </div>
-
-                        <button type="submit" class="btn btn-warning btn_size2">Add to Cart</button>
-
-                        <button type="button" class="btn btn-success btn_size2">Buy Now</button>
-                    </div>
-                    @*                <div>
-                    <a href="@Url.Action("Edit","Home",new{ Id= @Model.Id})"><button type="button" class="btn btn-warning btn_size2">Edit</button></a>
-                    <button type="button" class="btn btn-success btn_size2">Buy now</button>
-                    </div>*@
                 </div>
             </div>
         </div>
 
     </div>
-</form>
+

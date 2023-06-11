@@ -28,7 +28,7 @@ namespace Assignment_NET105_Nhom3_API.Controllers
             var pd = await cartDetailService.GetCartDetailssByIDAsync(ID);
             return Ok(pd);
         }
-        [HttpPost("Addlist/")]
+        [HttpPost("Add/")]
         public async Task<ActionResult<CartDetailsViewModels>> PostCartDetails(CartDetailsViewModels pd) // Tạo mới
         {
             CartDetails ct = new CartDetails();
