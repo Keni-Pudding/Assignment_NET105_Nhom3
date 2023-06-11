@@ -54,7 +54,7 @@
                             <li class="nav-item font dropdown" style="margin-left: 30px; font-size: 23px;">
                                 <a class="nav-link text-dark dropdown-toggle" role="button" data-bs-toggle="dropdown">
                                     <i class="fa-solid fa-circle-user"></i>
-
+                                    <span class="font">User</span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="Logout">LogOut</a></li>
@@ -66,13 +66,7 @@
                 </div>
             </nav>
 
-        </header>
-            <script type="text/javascript">
-
-                Swal.fire("Hi User")
-
-            </script>     
-    }
+        </header>    }
     else if (JsonData == "Admin")
     {
         <header>
@@ -116,15 +110,9 @@
                             }
                             <li class="nav-item font dropdown" style="margin-left: 30px; font-size: 23px;">
                                 <a class="nav-link text-dark dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                                    
                                     <i class="fa-solid fa-circle-user"></i>
-                                    @if (acc == null)
-                                    {
-                                        <span></span>
-                                    }
-                                    else
-                                    {
-                                        <span class="font">@acc.UserName</span>
-                                    }
+                                    <span class="font">Admin</span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     @if (acc == null)
@@ -139,19 +127,11 @@
                                 </ul>
                             </li>
                         </ul>
-
                     </div>
                 </div>
             </nav>
-
         </header>
-
-            <script type="text/javascript">
-
-                Swal.fire("Hi Admin")
-
-            </script>
-
+        
     }
     else
     {

@@ -22,6 +22,12 @@ namespace Assignment_NET105_Nhom3_API.Controllers
             var result = _productDetailsService.GetAllProductDetailsByProductID_View(id);
             return Ok(result);
         }
+        [HttpGet("getAllByID")]
+        public IActionResult GetAllProductDetailsByID_View(Guid id) //  Lấy danh sách data
+        {
+            var result = _productDetailsService.GetAllProductDetailsByID_View(id);
+            return Ok(result);
+        }
         [HttpGet]
         public async Task<ActionResult<ProductDetails>> GetAllProductDetailsAsync() //  Lấy danh sách data
         {
@@ -38,7 +44,7 @@ namespace Assignment_NET105_Nhom3_API.Controllers
         public async Task<ActionResult<ProductDetails>> PostProductDetails(ProductDetailsViewModels_Add_Up pdvm) // Tạo mới
         {
             ProductDetails pd = new ProductDetails();
-            pd.Id = Guid.NewGuid();
+            pd.Id = pdvm.Id;
             pd.ProductId = pdvm.ProductId;
             pd.SizeId = pdvm.SizeId;
             pd.ColorId = pdvm.ColorId;

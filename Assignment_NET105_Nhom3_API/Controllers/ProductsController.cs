@@ -14,7 +14,7 @@ namespace Assignment_NET105_Nhom3_API.Controllers
         private readonly IProductServices _prd;
         public ProductsController(IProductServices prd)
         {
-                _prd = prd;
+            _prd = prd;
         }
         [HttpGet]
         public async Task<ActionResult<Products>> GetAllPro()
@@ -32,12 +32,12 @@ namespace Assignment_NET105_Nhom3_API.Controllers
         public async Task<ActionResult<Products>> PostPro(ProductViewModel prm)
         {
             Products a = new Products();
-            a.Id = Guid.NewGuid();  
-            a.Name = prm.Name;  
-            a.Image = prm.Image;    
-            a.Price = prm.Price;    
-            a.CategoryId = prm.CategoryId;  
-            a.Status = prm.Status;  
+            a.Id = prm.Id;
+            a.Name = prm.Name;
+            a.Image = prm.Image;
+            a.Price = prm.Price;
+            a.CategoryId = prm.CategoryId;
+            a.Status = prm.Status;
             await _prd.PostProduct(a);
             return Ok(a);
         }
@@ -46,7 +46,7 @@ namespace Assignment_NET105_Nhom3_API.Controllers
         {
             Products a = await _prd.GetProductsById(prm.Id);
             a.Name = prm.Name;
-            a.Image = prm.Image;
+            if (prm.Image == "cf7ee2f9-076b-4008-a55e-9af4310a89ac") { a.Image = a.Image; } else { a.Image = prm.Image; }
             a.Price = prm.Price;
             a.CategoryId = prm.CategoryId;
             a.Status = prm.Status;

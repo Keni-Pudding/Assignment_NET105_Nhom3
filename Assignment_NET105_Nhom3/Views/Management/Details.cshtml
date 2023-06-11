@@ -1,7 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@model Assignment_NET105_Nhom3_Shared.Models.Products
+﻿@model Assignment_NET105_Nhom3_Shared.ViewModels.ProductDetailsViewModels_Show
 
 @{
     ViewData["Title"] = "Detail";
@@ -24,7 +21,7 @@
         </div>
         <div class="col-md-7 ">
             <div class="content1_detail">
-                <h2>@Model.Name</h2>
+                <h2>@Model.ProductName</h2>
                 <div class="row">
                     <div class="col-md-3"><img src="Image/rating.png" alt=""></div>
                     <div class="col-md-3"> <h5>400 Đánh giá</h5></div>
@@ -46,22 +43,14 @@
                 <div class="row">
                     <div class="col-md-10">
                         <div class="Mausac">
-                            <h5>Thể loại : @Model.Category.Name</h5>
+                            <h5>Thể loại : @Model.CategoryName</h5>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-10">
                         <div class="Mausac">
-                            @*<h5>Màu sắc : @Model.Color.Name</h5>*@
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-10">
-                        <div class="Mausac">
-                            @*<h5>Size:    @Model.Size.Name</h5>*@
+                            <h5>Màu sắc : @Model.ColorName</h5>
                         </div>
                     </div>
                 </div>
@@ -69,12 +58,20 @@
                 <div class="row">
                     <div class="col-md-10">
                         <div class="Mausac">
-                            @*<h5>Số lượng : @Model.AvailableQuantity</h5>*@
+                            <h5>Size:    @Model.SizeName</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="Mausac">
+                            <h5>Số lượng : @Model.AvaiableQuatity</h5>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <a href="@Url.Action("Edit","Home",new{ Id= @Model.Id})"><button type="button" class="btn btn-warning btn_size2" >Edit</button></a>
+                        <a href="@Url.Action("UpdateProductDetail","Management",new{ Id= @Model.Id})"><button type="button" class="btn btn-warning btn_size2">Edit</button></a>
                     <button type="button" class="btn btn-success btn_size2">Buy now</button>
                 </div>
             </div>

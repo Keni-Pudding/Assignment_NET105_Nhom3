@@ -33,7 +33,7 @@ namespace Assignment_NET105_Nhom3.Controllers
             // Send request POST to register API
             var response = await _httpClient.PostAsync($"https://localhost:7007/api/register", stringContent);
 
-            ViewBag.Message = await response.Content.ReadAsStringAsync();
+            ViewBag.Message1 = await response.Content.ReadAsStringAsync();
             return View();
         }
     }

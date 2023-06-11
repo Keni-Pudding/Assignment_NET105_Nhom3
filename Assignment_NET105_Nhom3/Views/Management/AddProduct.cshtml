@@ -2,7 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
-@model Assignment_NET105_Nhom3_Shared.Models.Products;
+@model Assignment_NET105_Nhom3_Shared.ViewModels.ProductViewModel;
 @{
 
 }
@@ -23,7 +23,7 @@
                     <label asp-for="Image" class="col-sm-2 col-form-label">Image</label>
                     <div class="col-sm-10">
                         <div class="mb-3">
-                            <input class="form-control" type="file" id="formFile" name="ImageFile" accept="iamges/*" style="width: 63%;">
+                            <input class="form-control" type="file" id="formFile" name="ImageFile" accept="Images/*" style="width: 63%;">
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                     <div class="col-sm-10">
 
                         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                            @foreach (var a in ViewBag.Categories)
+                            @foreach (var a in ViewBag.Cate)
                             {
                                 <input asp-for="CategoryId" type="radio" class="btn-check" name="CategoryId" id="@a.Id" value="@a.Id">
                                 <label asp-for="CategoryId" class="btn btn-outline-primary" for="@a.Id">@a.Name</label>
