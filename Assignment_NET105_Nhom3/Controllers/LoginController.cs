@@ -19,11 +19,11 @@ namespace Assignment_NET105_Nhom3.Controllers
     {
 
         private readonly HttpClient _httpClient;
-     
-        public LoginController(HttpClient httpClient )
+
+        public LoginController(HttpClient httpClient)
         {
             _httpClient = httpClient;
-           
+
         }
 
         [HttpGet]
@@ -53,9 +53,9 @@ namespace Assignment_NET105_Nhom3.Controllers
                 HttpContext.Session.SetString("UserId", jwt.Claims.FirstOrDefault(u => u.Type == "Id").Value);
                 HttpContext.Session.SetString("role", jwt.Claims.FirstOrDefault(u => u.Type == "RoleName").Value);
 
-            
-            
-              
+
+
+
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -65,9 +65,9 @@ namespace Assignment_NET105_Nhom3.Controllers
             }
         }
 
-        public async Task<IActionResult> Logout()
+        public IActionResult Logout()
         {
-            await HttpContext.SignOutAsync();
+            HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
     }

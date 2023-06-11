@@ -58,7 +58,7 @@ namespace Assignment_NET105_Nhom3_API.Services
 				UserName= registerUser.Username,
 				Password=registerUser.Password,
 				Email= registerUser.Email,
-				RoleId=Guid.Parse("9bd49d4b-adde-470f-9c70-29cbb73cb46f"),
+				RoleId=Guid.Parse("9BD49D4B-ADDE-470F-9C70-29CBB73CB46F"),
 				Address="",
 				Status=1,
 				CustomerCode="",

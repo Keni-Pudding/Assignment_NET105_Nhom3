@@ -25,7 +25,7 @@ namespace Assignment_NET105_Nhom3_API.Services
             //check user tồn tại
             var username = await context.Customer.FirstOrDefaultAsync(p => p.UserName == loginUser.Username);
 
-            if (username != null && await context.Customer.FirstOrDefaultAsync(p => p.Password == username.Password) != null)
+            if (username != null && await context.Customer.FirstOrDefaultAsync(p => p.Password == loginUser.Password && p.UserName == loginUser.Username) != null)
             {
                 // lấy role của user
                 var roles = await context.Role.FirstOrDefaultAsync(p => p.Id == username.RoleId);
