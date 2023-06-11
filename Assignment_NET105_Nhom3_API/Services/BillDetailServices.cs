@@ -60,24 +60,26 @@ namespace Assignment_NET105_Nhom3_API.Services
         public async Task<List<BillDetailsViewModels_Show>> GetBillDetailtByBill(Guid Id)
         {
             var bds = await (from a in _context.BillDetails
-                       join b in _context.Bill on a.BillId equals b.Id
-                       join c in _context.ProductDetails on a.ProductDetailsId equals c.Id
-                       join d in _context.Combos on a.ComboId equals d.Id
-                       join e in _context.Products on c.ProductId equals e.Id
-                             join f in _context.Size on c.SizeId equals f.Id
-                             join g in _context.Color on c.ColorId equals g.Id
+                             join b in _context.Bill on a.BillId equals b.Id
+                             join c in _context.ProductDetails on a.ProductDetailsId equals c.Id into pc
+                             from cp in pc.DefaultIfEmpty()
+                             join d in _context.Combos on a.ComboId equals d.Id into cd
+                             from dc in cd.DefaultIfEmpty()
+                             join e in _context.Products on cp.ProductId equals e.Id
+                             join f in _context.Size on cp.SizeId equals f.Id
+                             join g in _context.Color on cp.ColorId equals g.Id
                              select new BillDetailsViewModels_Show
-                       {
-                           Id=a.Id,
-                           BillId=a.BillId,
-                           ProductName=e.Name,
-                           Image = e.Image,
-                           ComboName = d.Name,
-                           Size = e.Name,
-                           Color = g.Name,
-                           Quantity = a.Quantity,
-                           Price = e.Price * a.Quantity,
-                       }).ToListAsync();
+                             {
+                                 Id = a.Id,
+                                 BillId = a.BillId,
+                                 ProductName = e.Name,
+                                 Image = e.Image,
+                                 ComboName = dc.Name,
+                                 Size = f.Name,
+                                 Color = g.Name,
+                                 Quantity = a.Quantity,
+                                 Price = e.Price * a.Quantity
+                             }).Where(a => a.BillId == Id).ToListAsync();
             return bds;
         }
 
