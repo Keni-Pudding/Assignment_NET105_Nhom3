@@ -167,6 +167,8 @@ namespace Assignment_NET105_Nhom3.Controllers
             var bodyContent = new StringContent(addBill, Encoding.UTF8, "application/json");
             var repos = await _httpClient.PostAsync($"https://localhost:7007/api/bill/add_bill", bodyContent);
 
+
+
             var f = await _httpClient.GetAsync($"https://localhost:7007/api/CartDetailsController/cart_detail_by_user/" + UserId.ToString());
             // lấy ra cart detail theo id
             var ff = await f.Content.ReadAsStringAsync();

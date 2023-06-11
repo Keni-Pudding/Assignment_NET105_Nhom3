@@ -58,6 +58,7 @@
         </div>
         <div class="col-md-4 thanhtoan1">
            @*<h4>Thông tin thanh toán  (@cartDetails.Count() )</h4>*@
+           <form asp-action="PayToBill" method="post">
             <hr style="color:black;">
             <div class="row">
                 <div class="col-md-6"><h5>Tổng tiền</h5></div>
@@ -69,6 +70,7 @@
             <h6>Bạn cũng có thể nhập mã giảm giá ở trang thanh toán</h6>
             <a href="@Url.Action("PayToBill","Home",new{})"></a>
             <button type="submit" class="btn_thanhtoan">Thanh toán</button>
+            </form>
         </div>
     </div>
   

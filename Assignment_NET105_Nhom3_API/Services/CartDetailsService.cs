@@ -36,7 +36,8 @@ namespace Assignment_NET105_Nhom3_API.Services
 
         public async Task<List<CartDetails>> GetAllCartDetailsByUsser(Guid UserId)
         {
-            return await _myDbContext.CartDetails.Where(x => x.UserId == UserId).ToListAsync();
+            var a= await _myDbContext.CartDetails.Where(x => x.UserId == UserId).ToListAsync();
+            return a;
         }
 
         public async Task<CartDetails> GetCartDetailssByIDAsync(Guid ID)
