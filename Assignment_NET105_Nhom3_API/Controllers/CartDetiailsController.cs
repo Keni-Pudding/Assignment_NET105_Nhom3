@@ -28,6 +28,18 @@ namespace Assignment_NET105_Nhom3_API.Controllers
             var pd = await cartDetailService.GetCartDetailssByIDAsync(ID);
             return Ok(pd);
         }
+        [HttpGet("abcc/{IDProductDetails}")]
+        public async Task<ActionResult<CartDetails>> GetCartDetailsByIDProductDetails(Guid IDProductDetails) // Lấy data theo Id
+        {
+            var pd = await cartDetailService.GetCartDetailssByIDProductDetailsAsync(IDProductDetails);
+            return Ok(pd);
+        }
+        [HttpGet("abcc1/IDProductDetails,UserID")]
+        public async Task<ActionResult<CartDetails>> GetCartDetailsByIDProductDetailsAndUser(Guid IDProductDetails,Guid  UserId) // Lấy data theo Id
+        {
+            var pd = await cartDetailService.GetCartDetailssByIDProductDetailsandUserAsync(IDProductDetails,UserId);
+            return Ok(pd);
+        }
         [HttpPost("Add/")]
         public async Task<ActionResult<CartDetailsViewModels>> PostCartDetails(CartDetailsViewModels pd) // Tạo mới
         {
@@ -46,7 +58,7 @@ namespace Assignment_NET105_Nhom3_API.Controllers
             CartDetails cartdt = await cartDetailService.GetCartDetailssByIDAsync(cd.Id);
             cartdt.ProductDetailId = cd.ProductDetailId;
             cartdt.UserId = cd.UserId;
-            cartdt.ComboId = cd.ComboId;
+           // cartdt.ComboId = cd.ComboId;
             cartdt.Quantity = cd.Quantity;
             await cartDetailService.PutCartDetailssAsync(cartdt);
             return Ok();

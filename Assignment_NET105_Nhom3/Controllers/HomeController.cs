@@ -12,11 +12,12 @@ namespace Assignment_NET105_Nhom3.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly HttpClient _httpClient;
+        private readonly HttpClient _httpClient;     
         public HomeController(ILogger<HomeController> logger, HttpClient httpClient)
         {
             _logger = logger;
             _httpClient = httpClient;
+            
         }
 
         [HttpGet]
@@ -211,7 +212,7 @@ namespace Assignment_NET105_Nhom3.Controllers
             return View(productsD);
         }
         [HttpPost]
-        public async Task<IActionResult> AddToCart(Guid ProductId, Guid ColorID, Guid SizeID, int quantity, CartDetails addcartDetails)
+        public async Task<IActionResult> AddToCart(Guid ProductId, Guid ColorID, Guid SizeID, int quantity, CartDetails addcartDetails, CartDetails addcartDetails1)
         {
             //check xem guest hay không 
             var Rolename = HttpContext.Session.GetString("role");
@@ -245,18 +246,23 @@ namespace Assignment_NET105_Nhom3.Controllers
                         return Content("Sản phẩm không đủ số lượng bạn mong muốn");
                     }
                     //check xem giỏ hàng có sản phẩm hay chưa 
-                    var response2 = await _httpClient.GetAsync("https://localhost:7007/api/CartDetailsController/" + ProductDetails.ToString());
+                    var response2 = await _httpClient.GetAsync("https://localhost:7007/api/CartDetailsController/abcc/" + ProductDetails.Id.ToString());
                     var json2 = await response2.Content.ReadAsStringAsync();
                     var options2 = new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     };
-                    var CartDetails = JsonSerializer.Deserialize<ProductDetails>(json2, options2);
-                    if (CartDetails != null) //sản phẩm đó còn số lượng đủ bán và sản phẩm chưa có giỏ hàng
+                    var CartDetails = new CartDetails();
+                    if (json2!="")
                     {
+                         CartDetails = JsonSerializer.Deserialize<CartDetails>(json2, options2);
+                    }
+                    if (json2 == "") //sản phẩm đó còn số lượng đủ bán và sản phẩm chưa có giỏ hàng
+                    {
+                      
                         HttpClient client = new HttpClient();
                         addcartDetails.Id = Guid.NewGuid();
-                        addcartDetails.UserId = Guid.Parse("444ACB59-28B1-4067-AD85-281DC7C973F1"); // id của khách vãng lai
+                        addcartDetails.UserId = Guid.Parse("340287BA-DD62-4AB9-B6C5-5C14C9BC694C"); // id của khách vãng lai
                         addcartDetails.ProductDetailId = ProductDetails.Id;
                         addcartDetails.Quantity = quantity;
                         var content = System.Text.Json.JsonSerializer.Serialize(addcartDetails);
@@ -266,6 +272,22 @@ namespace Assignment_NET105_Nhom3.Controllers
                         var postResult = await client.PostAsync($"https://localhost:7007/api/CartDetailsController/Add", bodyContent);
                         return Content("Đã add thành công");
                     }
+                    else
+                    {
+                        HttpClient client = new HttpClient();
+                        addcartDetails.Id = CartDetails.Id;
+                        addcartDetails.UserId = Guid.Parse("340287BA-DD62-4AB9-B6C5-5C14C9BC694C");
+                        addcartDetails.ProductDetailId = ProductDetails.Id;
+                        int a = Convert.ToInt32(CartDetails.Quantity);
+                        int c = a + quantity;
+                        addcartDetails.Quantity = c;/* Convert.ToInt32(quantity);*/
+                       // int a = addcartDetails.Quantity;
+                        var content = System.Text.Json.JsonSerializer.Serialize(addcartDetails);
+                        var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
+                        // Call API
+                        var postResult = await client.PutAsync($"https://localhost:7007/api/CartDetailsController/Put", bodyContent);
+                        return Content("Đã add thành công");
+                    }    
                 }
             }
             else 
@@ -291,6 +313,7 @@ namespace Assignment_NET105_Nhom3.Controllers
                 }
                 else
                 {
+                    var UserId = HttpContext.Session.GetString("UserId");
                     // Khi có sản phẩm đó và số lượng còn trên 0 tiến hành add vào giỏ hàng 
                     //check xem số lượng có đủ để bán không 
                     if (ProductDetails.AvaiableQuatity < quantity)
@@ -299,16 +322,20 @@ namespace Assignment_NET105_Nhom3.Controllers
                     }
                     //check xem nó có giỏ hàng chưa
                     //check xem giỏ hàng có sản phẩm hay chưa 
-                    var response2 = await _httpClient.GetAsync("https://localhost:7007/api/CartDetailsController/" + ProductDetails.ToString());
+                    var response2 = await _httpClient.GetAsync("https://localhost:7007/api/CartDetailsController/abcc1/IDProductDetails,UserID?IDProductDetails="+ProductDetails.Id.ToString()+ "&UserId=" +UserId.ToString());
                     var json2 = await response2.Content.ReadAsStringAsync();
                     var options2 = new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     };
-                    var CartDetails = JsonSerializer.Deserialize<ProductDetails>(json2, options2);
-                    if (CartDetails != null) //sản phẩm đó còn số lượng đủ bán và sản phẩm chưa có giỏ hàng
+                    var CartDetails = new CartDetails();
+                    if (json2 != "")
                     {
-                        var UserId = HttpContext.Session.GetString("UserId");
+                        CartDetails = JsonSerializer.Deserialize<CartDetails>(json2, options2);
+                    }
+                    if (json2 == "") //sản phẩm đó còn số lượng đủ bán và sản phẩm chưa có giỏ hàng
+                    {
+                        
                         HttpClient client = new HttpClient();
                         addcartDetails.Id = Guid.NewGuid();
                         addcartDetails.UserId = Guid.Parse(UserId);
@@ -319,6 +346,22 @@ namespace Assignment_NET105_Nhom3.Controllers
                         var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
                         // Call API
                         var postResult = await client.PostAsync($"https://localhost:7007/api/CartDetailsController/Add", bodyContent);
+                        return Content("Đã add thành công");
+                    }
+                    else
+                    {
+                        HttpClient client = new HttpClient();
+                        addcartDetails.Id = CartDetails.Id;
+                        addcartDetails.UserId = Guid.Parse("340287BA-DD62-4AB9-B6C5-5C14C9BC694C");
+                        addcartDetails.ProductDetailId = ProductDetails.Id;
+                        int a = Convert.ToInt32(CartDetails);
+                        int c = a + quantity;
+                        addcartDetails.Quantity = c;/* Convert.ToInt32(quantity);*/
+                        // int a = addcartDetails.Quantity;
+                        var content = System.Text.Json.JsonSerializer.Serialize(addcartDetails);
+                        var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
+                        // Call API
+                        var postResult = await client.PutAsync($"https://localhost:7007/api/CartDetailsController/Put", bodyContent);
                         return Content("Đã add thành công");
                     }
                 }

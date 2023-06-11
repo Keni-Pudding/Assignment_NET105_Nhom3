@@ -37,6 +37,16 @@ namespace Assignment_NET105_Nhom3_API.Services
             return await _myDbContext.CartDetails.FirstOrDefaultAsync(c => c.Id == ID);
         }
 
+        public async Task<CartDetails> GetCartDetailssByIDProductDetailsandUserAsync(Guid ID1, Guid ID2)
+        {
+            return await _myDbContext.CartDetails.FirstOrDefaultAsync(c => c.ProductDetailId == ID1 && c.UserId==ID2);
+        }
+
+        public async Task<CartDetails> GetCartDetailssByIDProductDetailsAsync(Guid ID)
+        {
+            return await _myDbContext.CartDetails.FirstOrDefaultAsync(c => c.ProductDetailId == ID);
+        }
+
         public async Task<CartDetails> PostCartDetailssAsync(CartDetails CartDetails)
         {
             await _myDbContext.CartDetails.AddAsync(CartDetails);
