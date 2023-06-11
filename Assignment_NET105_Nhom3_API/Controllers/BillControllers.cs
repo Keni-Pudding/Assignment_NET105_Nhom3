@@ -35,7 +35,7 @@ namespace Assignment_NET105_Nhom3_API.Controllers  /// ở đây có bill và bi
             bill1.Id=Guid.NewGuid(); 
             bill1.Status = bill.Status;
             bill1.CreatedDate= DateTime.Now;
-            bill1.UserId = Guid.Parse("f9a991b2-c9cf-4ef6-9aec-90235617bce6");
+            bill1.UserId = bill.UserId;
 
             await _billServices.AddBill(bill1);
             return Ok(bill1);

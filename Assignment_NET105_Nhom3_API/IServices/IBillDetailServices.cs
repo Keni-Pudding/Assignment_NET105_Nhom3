@@ -10,7 +10,7 @@ namespace Assignment_NET105_Nhom3_API.IServices
         public Task<bool> Delete(Guid Id);
         public Task<List<BillDetails>> GetAllBillDetail();
         public Task<BillDetails> GetBillDetailById(Guid Id);
-        public Task<List<BillDetails>> GetBillDetailtByName(string Name);
+        public Task<List<BillDetails>> GetBillDetailtByUser(Guid UserId);
         public Task<List<BillDetailsViewModels_Show>> GetBillDetailtByBill(Guid Id);
 
 
