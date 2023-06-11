@@ -7,7 +7,7 @@
     //List<CartDetails> cartDetails = ViewBag.CartDetail;
 
 }
-@*@model IEnumerable<Assignment_ThangNVPH25980.Models.CartDetails>;*@
+@model IEnumerable<Assignment_NET105_Nhom3_Shared.ViewModels.CartDetailsViewModels>;
 
 <div class="container giaban">
     <h4>Trang chủ > Giỏ hàng>></h4>
@@ -17,31 +17,31 @@
 
 <div class="container ">
     <center><p class="tieude">Giỏ hàng của bạn</p></center>
-            <form asp-action="PayToBill">
+           
     <div class="row thanhtoan">
 
         <div class="col-md-8">
             @{
                 decimal total = 0;
             }
-            @foreach (var a in ViewBag.CartDetail)
+            @foreach (var a in ViewBag.ShowCartDetails)
             {
                 <div class="row">
-                    <div class="col-md-2"><img src="/images/@a.ProductDetails.Products.Image" class="image" alt="..."></div>
+                    <div class="col-md-2"><img src="/images/@a.Image" class="image" alt="..."></div>
                     <div class="col-md-10">
-                        <h4>@a.ProductDetails.Products.Name</h4>  
+                        <h4>@a.ProductName</h4>
                         <a href="@Url.Action("Delete","Home" ,new{Id=@a.Id})">
                         <button type="button" class="btn btn-secondary" style="margin-left: 600px; width: 30px; height: 30px;font-size: 15px;">
                             <i class="fa-solid fa-trash-can"></i></button></a>
-                        <h5>@a.ProductDetails.Products.Price<del>(230.000 đ)</del></h5>
-                        <h5 style="padding-top: 10px;">@a.ProductDetails.Size.Name- @a.ProductDetails.Color.Name</h5>
+                        <h5>@a.Price<del>(230.000 đ)</del></h5>
+                        <h5 style="padding-top: 10px;">@a.SizeName- @a.ColorName</h5>
                         <button><i class="fa-solid fa-minus"></i></button>
                         <button>@a.Quantity</button>
                         <button><i class="fa-solid fa-plus"></i></button>
-                        <h5 style="padding-left:550px;color: red;">@(a.ProductDetails.Products.Price*a.Quantity) </h5>
-                        @{
+                        <h5 style="padding-left:550px;color: red;">@(a.Price*a.Quantity) </h5>
+                       @* @{
                             total+=a.ProductDetails.Products.Price * a.Quantity;
-                        }
+                        }*@
                     </div>
                 </div>
             }
@@ -57,7 +57,7 @@
             </div>
         </div>
         <div class="col-md-4 thanhtoan1">
-            <h4>Thông tin thanh toán  @*(@cartDetails.Count()*@ )</h4>
+           @*<h4>Thông tin thanh toán  (@cartDetails.Count() )</h4>*@
             <hr style="color:black;">
             <div class="row">
                 <div class="col-md-6"><h5>Tổng tiền</h5></div>
@@ -71,5 +71,5 @@
             <button type="submit" class="btn_thanhtoan">Thanh toán</button>
         </div>
     </div>
-    </form>
+  
 </div>

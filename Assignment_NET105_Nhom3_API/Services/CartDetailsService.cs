@@ -1,7 +1,9 @@
 ﻿using Assignment_NET105_Nhom3_API.DataContext;
 using Assignment_NET105_Nhom3_API.IServices;
 using Assignment_NET105_Nhom3_Shared.Models;
+using Assignment_NET105_Nhom3_Shared.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
 
 namespace Assignment_NET105_Nhom3_API.Services
 {
@@ -32,6 +34,11 @@ namespace Assignment_NET105_Nhom3_API.Services
             return x;
         }
 
+        public async Task<List<CartDetails>> GetAllCartDetailsByUsser(Guid UserId)
+        {
+            return await _myDbContext.CartDetails.Where(x => x.UserId == UserId).ToListAsync();
+        }
+
         public async Task<CartDetails> GetCartDetailssByIDAsync(Guid ID)
         {
             return await _myDbContext.CartDetails.FirstOrDefaultAsync(c => c.Id == ID);
@@ -45,6 +52,28 @@ namespace Assignment_NET105_Nhom3_API.Services
         public async Task<CartDetails> GetCartDetailssByIDProductDetailsAsync(Guid ID)
         {
             return await _myDbContext.CartDetails.FirstOrDefaultAsync(c => c.ProductDetailId == ID);
+        }
+
+        public async Task<List<CartDetailsViewModels>> GetCartDetailView(Guid UserId)
+        {
+            var bds = await (from a in _myDbContext.CartDetails
+                             join b in _myDbContext.Cart on a.UserId equals b.UserId
+                             join c in _myDbContext.ProductDetails on a.ProductDetailId equals c.Id 
+                             join d in _myDbContext.Products on c.ProductId equals d.Id
+                            join e in _myDbContext.Color on c.ColorId equals e.Id
+                            join f in _myDbContext.Size on c.SizeId equals f.Id       
+                            where a.UserId== UserId
+                            select new CartDetailsViewModels
+                             {
+                                 Id = a.Id,
+                                 ProductName = d.Name,
+                                 SizeName = f.Name,
+                                ColorName = e.Name,
+                                Image = d.Image,
+                                Price = d.Price,
+                                Quantity = a.Quantity,
+                             }).ToListAsync();
+            return bds;
         }
 
         public async Task<CartDetails> PostCartDetailssAsync(CartDetails CartDetails)

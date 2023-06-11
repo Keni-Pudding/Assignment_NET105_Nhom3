@@ -3,6 +3,7 @@ using Assignment_NET105_Nhom3_API.Services;
 using Assignment_NET105_Nhom3_Shared.Models;
 using Assignment_NET105_Nhom3_Shared.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
@@ -90,15 +91,24 @@ namespace Assignment_NET105_Nhom3.Controllers
             return View(billDetails);
         }
 
-        public IActionResult Cart()
+        [HttpGet]
+        public async Task<IActionResult> Cart()
         {
-            return View();
+            var UserId = HttpContext.Session.GetString("UserId");
+            var response = await _httpClient.GetAsync($"https://localhost:7007/api/CartDetailsController/ShowCartDetails/" + UserId.ToString());
+            var a = await response.Content.ReadAsStringAsync();
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            List<CartDetailsViewModels> CartDetails = JsonSerializer.Deserialize<List<CartDetailsViewModels>>(a, options);
+            ViewBag.ShowCartDetails = CartDetails;
+            return View(CartDetails);
         }
         public IActionResult Products()
         {
             return View();
         }
-
         public async Task<IActionResult> Products1()
         {
             var client = new HttpClient();
@@ -373,6 +383,23 @@ namespace Assignment_NET105_Nhom3.Controllers
 
             // var Rolename = HttpContext.Session.GetString("role");
 
-        }
+        }    
+       
+        
+        
+        //[HttpGet]
+        //public async Task<IActionResult> Cart()
+        //{ 
+        //    var UserId  = HttpContext.Session.GetString("UserId");
+        //    var response = await _httpClient.GetAsync($"https://localhost:7007/api/CartDetailsController/ShowCartDetails?Id="+UserId.ToString());
+        //    var a = await response.Content.ReadAsStringAsync();
+        //    var options = new JsonSerializerOptions
+        //    {
+        //        PropertyNameCaseInsensitive = true
+        //    };
+        //    List<CartDetailsViewModels> CartDetails = JsonSerializer.Deserialize<List<CartDetailsViewModels>>(a, options);
+        //    ViewBag.ShowCartDetails = CartDetails;
+        //    return View(CartDetails);
+        //}
     }
 }
