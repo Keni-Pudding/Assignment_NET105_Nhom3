@@ -3,7 +3,14 @@
 @{
     ViewData["Title"] = "DetailShop";
 }
-
+@using Newtonsoft.Json;
+@{
+    string Hethang = Context.Session.GetString("hethang"); // Hết hàng
+    string soluonghet = Context.Session.GetString("soluonghet"); // hết số lượng
+    string soluongkhongdu = Context.Session.GetString("soluongkhongdu"); // hết số lượng
+    string thanhcong = Context.Session.GetString("thanhcong"); // thêm thành công
+    string chuachon = Context.Session.GetString("chuachon"); // Chưa chọn sp 
+}
 
 
 
@@ -72,4 +79,39 @@
         </div>
 
     </div>
+<p>@ViewBag.Hethang</p>
+@if (!string.IsNullOrEmpty(Hethang))
+{
+    <script type="text/javascript">
+
+        Swal.fire("Sản phẩm đã hết hàng")
+    </script>
+}
+@if (!string.IsNullOrEmpty(soluonghet))
+{
+    <script type="text/javascript">
+
+        Swal.fire("Sản phẩm số lượng không đủ ")
+    </script>
+}
+@if (!string.IsNullOrEmpty(soluongkhongdu))
+{
+    <script type="text/javascript">
+
+        Swal.fire("Số lượng không đủ để bán ")
+    </script>
+}
+@if (!string.IsNullOrEmpty(thanhcong))
+{
+    <script type="text/javascript">
+
+        Swal.fire("Thêm sản phẩm thành công ")
+    </script>
+}@if (!string.IsNullOrEmpty(chuachon))
+{
+    <script type="text/javascript">
+
+        Swal.fire("Vui lòng chọn Size và Color ")
+    </script>
+}
 

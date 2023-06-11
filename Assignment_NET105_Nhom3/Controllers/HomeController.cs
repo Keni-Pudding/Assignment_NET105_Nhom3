@@ -301,6 +301,18 @@ namespace Assignment_NET105_Nhom3.Controllers
         [HttpPost]
         public async Task<IActionResult> AddToCart(Guid ProductId, Guid ColorID, Guid SizeID, int quantity, CartDetails addcartDetails, CartDetails addcartDetails1)
         {
+            //Xóa các session
+            HttpContext.Session.Remove("hethang");
+            HttpContext.Session.Remove("soluonghet");
+            HttpContext.Session.Remove("soluongkhongdu");
+            HttpContext.Session.Remove("thanhcong");
+            HttpContext.Session.Remove("chuachon");
+
+            //check xem chọn size chưa 
+            if (ColorID == Guid.Empty || SizeID == Guid.Empty)
+            {
+                HttpContext.Session.SetString("chuachon", "chuachon");
+            }
             //check xem guest hay không 
             var Rolename = HttpContext.Session.GetString("role");
             if (Rolename == null)
@@ -318,11 +330,13 @@ namespace Assignment_NET105_Nhom3.Controllers
                 var ProductDetails = _lstProductDetails.Where(x => x.ColorId == ColorID && x.SizeId == SizeID).FirstOrDefault();
                 if (ProductDetails == null)
                 {
-                    return Content("Sản phẩm hết hàng");
+                    HttpContext.Session.SetString("hethang", "hethang");
+                    return RedirectToAction("DetailShop", new { Id = ProductId });
                 }
                 else if (ProductDetails.AvaiableQuatity <= 0)
                 {
-                    return Content("Sản phẩm hết hàng");
+                    HttpContext.Session.SetString("soluonghet", "soluonghet");
+                    return RedirectToAction("DetailShop", new { Id = ProductId });
                 }
                 else
                 {
@@ -330,7 +344,8 @@ namespace Assignment_NET105_Nhom3.Controllers
                     //check xem số lượng có đủ để bán không 
                     if (ProductDetails.AvaiableQuatity < quantity)
                     {
-                        return Content("Sản phẩm không đủ số lượng bạn mong muốn");
+                        HttpContext.Session.SetString("soluongkhongdu", "soluongkhongdu");
+                        return RedirectToAction("DetailShop", new { Id = ProductId });
                     }
                     //check xem giỏ hàng có sản phẩm hay chưa 
                     var response2 = await _httpClient.GetAsync("https://localhost:7007/api/CartDetailsController/abcc/" + ProductDetails.Id.ToString());
@@ -340,13 +355,13 @@ namespace Assignment_NET105_Nhom3.Controllers
                         PropertyNameCaseInsensitive = true
                     };
                     var CartDetails = new CartDetails();
-                    if (json2!="")
+                    if (json2 != "")
                     {
-                         CartDetails = JsonSerializer.Deserialize<CartDetails>(json2, options2);
+                        CartDetails = JsonSerializer.Deserialize<CartDetails>(json2, options2);
                     }
                     if (json2 == "") //sản phẩm đó còn số lượng đủ bán và sản phẩm chưa có giỏ hàng
                     {
-                      
+
                         HttpClient client = new HttpClient();
                         addcartDetails.Id = Guid.NewGuid();
                         addcartDetails.UserId = Guid.Parse("340287BA-DD62-4AB9-B6C5-5C14C9BC694C"); // id của khách vãng lai
@@ -357,7 +372,8 @@ namespace Assignment_NET105_Nhom3.Controllers
                         var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
                         // Call API
                         var postResult = await client.PostAsync($"https://localhost:7007/api/CartDetailsController/Add", bodyContent);
-                        return Content("Đã add thành công");
+                        HttpContext.Session.SetString("thanhcong", "thanhcong");
+                        return RedirectToAction("DetailShop", new { Id = ProductId });
                     }
                     else
                     {
@@ -368,16 +384,18 @@ namespace Assignment_NET105_Nhom3.Controllers
                         int a = Convert.ToInt32(CartDetails.Quantity);
                         int c = a + quantity;
                         addcartDetails.Quantity = c;/* Convert.ToInt32(quantity);*/
-                       // int a = addcartDetails.Quantity;
+                        // int a = addcartDetails.Quantity;
                         var content = System.Text.Json.JsonSerializer.Serialize(addcartDetails);
                         var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
                         // Call API
                         var postResult = await client.PutAsync($"https://localhost:7007/api/CartDetailsController/Put", bodyContent);
-                        return Content("Đã add thành công");
-                    }    
+
+                        HttpContext.Session.SetString("thanhcong", "thanhcong");
+                        return RedirectToAction("DetailShop", new { Id = ProductId });
+                    }
                 }
             }
-            else 
+            else
             {
                 //check sản phẩm có tồn tại không 
                 // lấy list productdetail của product
@@ -392,11 +410,13 @@ namespace Assignment_NET105_Nhom3.Controllers
                 var ProductDetails = _lstProductDetails.Where(x => x.ColorId == ColorID && x.SizeId == SizeID).FirstOrDefault();
                 if (ProductDetails == null)
                 {
-                    return Content("Sản phẩm hết hàng");
+                    HttpContext.Session.SetString("hethang", "hethang");
+                    return RedirectToAction("DetailShop", new { Id = ProductId });
                 }
                 else if (ProductDetails.AvaiableQuatity <= 0)
                 {
-                    return Content("Sản phẩm hết hàng");
+                    HttpContext.Session.SetString("soluonghet", "soluonghet");
+                    return RedirectToAction("DetailShop", new { Id = ProductId });
                 }
                 else
                 {
@@ -405,11 +425,12 @@ namespace Assignment_NET105_Nhom3.Controllers
                     //check xem số lượng có đủ để bán không 
                     if (ProductDetails.AvaiableQuatity < quantity)
                     {
-                        return Content("Sản phẩm không đủ số lượng bạn mong muốn");
+                        HttpContext.Session.SetString("soluongkhongdu", "soluongkhongdu");
+                        return RedirectToAction("DetailShop", new { Id = ProductId });
                     }
                     //check xem nó có giỏ hàng chưa
                     //check xem giỏ hàng có sản phẩm hay chưa 
-                    var response2 = await _httpClient.GetAsync("https://localhost:7007/api/CartDetailsController/abcc1/IDProductDetails,UserID?IDProductDetails="+ProductDetails.Id.ToString()+ "&UserId=" +UserId.ToString());
+                    var response2 = await _httpClient.GetAsync("https://localhost:7007/api/CartDetailsController/abcc1/IDProductDetails,UserID?IDProductDetails=" + ProductDetails.Id.ToString() + "&UserId=" + UserId.ToString());
                     var json2 = await response2.Content.ReadAsStringAsync();
                     var options2 = new JsonSerializerOptions
                     {
@@ -422,7 +443,7 @@ namespace Assignment_NET105_Nhom3.Controllers
                     }
                     if (json2 == "") //sản phẩm đó còn số lượng đủ bán và sản phẩm chưa có giỏ hàng
                     {
-                        
+
                         HttpClient client = new HttpClient();
                         addcartDetails.Id = Guid.NewGuid();
                         addcartDetails.UserId = Guid.Parse(UserId);
@@ -433,7 +454,8 @@ namespace Assignment_NET105_Nhom3.Controllers
                         var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
                         // Call API
                         var postResult = await client.PostAsync($"https://localhost:7007/api/CartDetailsController/Add", bodyContent);
-                        return Content("Đã add thành công");
+                        HttpContext.Session.SetString("thanhcong", "thanhcong");
+                        return RedirectToAction("DetailShop", new { Id = ProductId });
                     }
                     else
                     {
@@ -449,7 +471,8 @@ namespace Assignment_NET105_Nhom3.Controllers
                         var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
                         // Call API
                         var postResult = await client.PutAsync($"https://localhost:7007/api/CartDetailsController/Put", bodyContent);
-                        return Content("Đã add thành công");
+                        HttpContext.Session.SetString("thanhcong", "thanhcong");
+                        return RedirectToAction("DetailShop", new { Id = ProductId });
                     }
                 }
             }
