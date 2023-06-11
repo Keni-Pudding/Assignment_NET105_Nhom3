@@ -82,44 +82,7 @@
     <script src="main.js"></script>
     *@
 
-      <div class="Login full">
-        <div class=" container container1">
-          <div class="form login">
-            <span class="title">Login</span>
-              <form asp-action="Login">
-                <div class="input-field" >
-                  <input type="text" placeholder="Email" asp-for="UserName" name="user">
-                  <i class="fa-regular fa-envelope icon"></i>
-                </div>
-                <div class="input-field">
-                  <input type="password" placeholder="Password" asp-for="Password" name="pass">
-                  <i class="fa-solid fa-lock icon"></i>
-                  <i class="fa-regular fa-eye-slash showHidePW"></i>
-                </div>
-
-                <div class="checkbox-text">
-                  <div class="checkbox-content">
-                    <input type="checkbox" id="logCheck">
-                    <label for="logCheck" class="text">Remeber me</label>
-                  </div>
-                  <a href="#" class="text">Quên mật khẩu?</a>
-                </div>
-
-                <div class="input-field button">
-                  <input type="submit" value="Đăng nhập">
-                  
-                </div>
-              </form>
-
-              <div class="login-signup">
-                <span class="text">Bạn chưa có tài khoản?
-                  <a href="@Url.Action("SignUp","Home",new{})"  style="text-decoration:none; color: white" class="text signup-text" class="text signup-text">Đăng ký</a>
-                </span>
-              </div>
-
-          </div>
-        </div>
-      </div>
+      
 
 
 @*

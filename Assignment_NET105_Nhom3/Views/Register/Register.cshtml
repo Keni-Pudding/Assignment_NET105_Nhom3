@@ -5,23 +5,23 @@
 			<span class="title">Sign Up</span>
 			<form asp-action="Register">
 				<div class="input-field">
-					<input type="text" placeholder="Email" asp-for="Email" name="user">
+					<input type="text" placeholder="Email" asp-for="Email">
 
 				</div>
 				<div class="input-field">
-					<input type="text" placeholder="Username" asp-for="Name" name="user">
+					<input type="text" placeholder="Username" asp-for="Name">
 
 				</div>
 				<div class="input-field">
-					<input type="text" placeholder="User" asp-for="Username" name="user">
+					<input type="text" placeholder="User" asp-for="Username">
 
 				</div>
 				<div class="input-field">
-					<input type="password" placeholder="Password" asp-for="Password" name="pass">
+					<input type="password" placeholder="Password" asp-for="Password">
 
 				</div>
 				<div class="input-field">
-					<input type="password" placeholder="ConfirmPassword" asp-for="ConfirmPassword" name="pass">
+					<input type="password" placeholder="ConfirmPassword" asp-for="ConfirmPassword">
 
 				</div>
 
@@ -35,15 +35,11 @@
 		</div>
 	</div>
 </div>
-@if (!string.IsNullOrEmpty(ViewBag.Message))
+@if (!string.IsNullOrEmpty(ViewBag.Message1))
 {
 	<script type="text/javascript">
-		Swal.fire({
-			icon: 'error',
-			title: 'Đã có lỗi',
-			text: "@ViewBag.Message",
-			
-		})
+
+		Swal.fire("@ViewBag.Message1")
 	</script>
 }
 

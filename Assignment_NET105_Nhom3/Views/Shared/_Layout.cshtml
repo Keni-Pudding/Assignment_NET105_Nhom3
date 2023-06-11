@@ -67,6 +67,11 @@
             </nav>
 
         </header>
+            <script type="text/javascript">
+
+                Swal.fire("Hi User")
+
+            </script>     
     }
     else if (JsonData == "Admin")
     {
@@ -140,6 +145,13 @@
             </nav>
 
         </header>
+
+            <script type="text/javascript">
+
+                Swal.fire("Hi Admin")
+
+            </script>
+
     }
     else
     {
@@ -186,7 +198,6 @@
                                     {
                                         <li><a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="Login">Login</a></li>
                                         <li><a class="dropdown-item" asp-area="" asp-controller="Register" asp-action="Register">SignUp</a></li>
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="Logout">LogOut</a></li>
                                     }
                                     else
                                     {

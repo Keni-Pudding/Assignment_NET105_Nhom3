@@ -1,16 +1,38 @@
 ﻿@model Assignment_NET105_Nhom3_Shared.ViewModels.LoginUser
 
-<form asp-action="Login">
-    <div class="form">
-        <label>Username:</label>
-        <input type="text" class="form-control" asp-for="Username" />
-    </div>
-    <div class="form">
-        <label>Password:</label>
-        <input type="password" class="form-control" asp-for="Password" />
+
+    <div class="Login full">
+        <div class=" container container1">
+            <div class="form login">
+                <span class="title">Login</span>
+                <form asp-action="Login">
+                    <div class="input-field">
+                        <input type="text" placeholder="Username" asp-for="Username">
+                        <i class="fa-regular fa-envelope icon"></i>
+                    </div>
+                    <div class="input-field">
+                        <input type="password" placeholder="Password" asp-for="Password">
+                        <i class="fa-solid fa-lock icon"></i>
+                        <i class="fa-regular fa-eye-slash showHidePW"></i>
+                    </div>
+
+                    @*<div class="checkbox-text">
+                        <div class="checkbox-content">
+                            <input type="checkbox" id="logCheck">
+                            <label for="logCheck" class="text">Remeber me</label>
+                        </div>
+                        <a href="#" class="text">Quên mật khẩu?</a>
+                    </div>*@
+
+                    <div class="input-field button">
+                        <input type="submit" value="Đăng nhập">
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Login</button>
-</form>
 
 <p>@ViewBag.Message</p>
