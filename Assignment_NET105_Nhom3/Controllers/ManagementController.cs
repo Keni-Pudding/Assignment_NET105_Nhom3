@@ -322,5 +322,33 @@ namespace Assignment_NET105_Nhom3.Controllers
             }
             return View("EditProduct", request);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteProducts(Guid Id)
+        {
+            HttpClient client3 = new HttpClient();
+            // Call API
+            var respone = await client3.GetAsync($"https://localhost:7007/api/Products/Id?ID={Id}");
+
+            var jsonString = await respone.Content.ReadAsStringAsync();
+
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            var data = JsonSerializer.Deserialize<ProductViewModel>(jsonString, options);
+            data.Status = 0;
+            HttpClient client4 = new HttpClient();
+            var content = JsonSerializer.Serialize(data);
+
+            var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
+
+            var putResult = await client4.PutAsync($"https://localhost:7007/api/Products/update", bodyContent);
+            if (putResult.IsSuccessStatusCode)
+            {
+                return Redirect(Url.Content($"https://localhost:7185/Management/ProductList"));
+            }
+            return BadRequest();
+        }
     }
 }
