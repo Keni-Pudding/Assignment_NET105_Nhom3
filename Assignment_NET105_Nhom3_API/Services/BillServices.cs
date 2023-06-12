@@ -69,7 +69,7 @@ namespace Assignment_NET105_Nhom3_API.Services
                          CreatedDate= a.CreatedDate,
                          Status= a.Status,
 
-                     }).ToListAsync();
+                     }).OrderByDescending(x => x.CreatedDate).ToListAsync();
             return bd;
 
         }

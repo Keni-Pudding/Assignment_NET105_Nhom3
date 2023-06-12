@@ -33,6 +33,17 @@ namespace Assignment_NET105_Nhom3.Controllers
             };
             var productsD = JsonSerializer.Deserialize<List<Products>>(json, options);
             ViewBag.ShowProduct = productsD;
+
+
+            var UserId = HttpContext.Session.GetString("UserId");
+            if (UserId != null)
+            {
+                var reponse1 = await _httpClient.GetAsync("https://localhost:7007/api/bill/get_all_Customer");
+                var asss = await reponse1.Content.ReadAsStringAsync();
+                List<Customer> Usser = JsonSerializer.Deserialize<List<Customer>>(asss, options);
+                var customer = Usser.FirstOrDefault(x => x.Id == Guid.Parse(UserId)).Name;
+                ViewBag.User = customer;
+            }
             return View(productsD);
         }
         [HttpGet]
@@ -181,35 +192,6 @@ namespace Assignment_NET105_Nhom3.Controllers
 
             List<CartDetails> ListCartDetail1= JsonSerializer.Deserialize<List<CartDetails>>(ff, options);
 
-            //for (int i = 0; i < ListCartDetail.Count(); i++)
-            //{
-
-            //    var bc = ListCartDetail[i].ProductDetailId;
-            //    var productDt = await _httpClient.GetAsync("https://localhost:7007/api/ProductDetails/get_productDetail_by_id//" +bc.ToString() );
-            //    var h = await productDt.Content.ReadAsStringAsync();
-            //    ProductDetails ProductDetail = JsonSerializer.Deserialize<ProductDetails>(h, options);
-
-            //    Products product = lstProduct.FirstOrDefault(x => x.Id == ProductDetail.ProductId);
-            //    var cartDetail = lstCartDetail.FirstOrDefault(x => x.ProductDetailId == ProductDetail.Id && x.UserId == Guid.Parse(UserId));
-
-            //    billDetails.Id = Guid.NewGuid();
-            //    billDetails.BillId = id;
-            //    billDetails.ProductDetailsId = ProductDetail.Id;
-            //    billDetails.Quantity = cartDetail.Quantity;
-            //    billDetails.Price = cartDetail.Quantity * product.Price;
-            //    var addBillDt = JsonSerializer.Serialize(billDetails);
-            //    var bodyContent1 = new StringContent(addBillDt, Encoding.UTF8, "application/json");
-            //    var Repos_addBillDT = await _httpClient.PostAsync($"https://localhost:7007/api/bill/add-billdetails", bodyContent1);
-
-            //    ProductDetail.AvaiableQuatity = ProductDetail.AvaiableQuatity - cartDetail.Quantity;
-            //    var updateProQuantity = JsonSerializer.Serialize(ProductDetail);
-            //    var bodyContent2 = new StringContent(updateProQuantity, Encoding.UTF8, "application/json");
-            //    var Repos_updateProQuantity = await _httpClient.PutAsync($"https://localhost:7007/api/bill/update-billdetails", bodyContent2);
-
-            //    var deleteCartDetail = JsonSerializer.Serialize(cartDetail.Id);
-            //    var bodyContent3 = new StringContent(deleteCartDetail, Encoding.UTF8, "application/json");
-            //    var Repos_deleteCartDetail = await _httpClient.DeleteAsync($"https://localhost:7007/api/CartDetailsController/delete-billdetails/Id?={bodyContent3}");
-            //}
 
             foreach (var item in ListCartDetail1)
             {
@@ -231,10 +213,10 @@ namespace Assignment_NET105_Nhom3.Controllers
                 var bodyContent1 = new StringContent(addBillDt, Encoding.UTF8, "application/json");
                 var Repos_addBillDT = await _httpClient.PostAsync($"https://localhost:7007/api/bill/add-billdetails", bodyContent1);
 
-                //ProductDetail.AvaiableQuatity = ProductDetail.AvaiableQuatity - cartDetail.Quantity;
-                //var updateProQuantity = JsonSerializer.Serialize(ProductDetail);
-                //var bodyContent2 = new StringContent(updateProQuantity, Encoding.UTF8, "application/json");
-                //var Repos_updateProQuantity = await _httpClient.PutAsync($"https://localhost:7007/api/bill/update-billdetails", bodyContent2);
+                ProductDetail.AvaiableQuatity = ProductDetail.AvaiableQuatity - cartDetail.Quantity;
+                var updateProQuantity = JsonSerializer.Serialize(ProductDetail);
+                var bodyContent2 = new StringContent(updateProQuantity, Encoding.UTF8, "application/json");
+                var Repos_updateProQuantity = await _httpClient.PutAsync($"https://localhost:7007/api/bill/update-billdetails", bodyContent2);
 
                 // Xóa giỏ
                 HttpClient httpClientDelete = new HttpClient();
@@ -540,11 +522,11 @@ namespace Assignment_NET105_Nhom3.Controllers
         //    ViewBag.ShowCartDetails = CartDetails;
         //    return View(CartDetails);
         //}
-        [HttpDelete]
+        
         public async Task<IActionResult> DeleteCart(Guid Id)
         {
-            HttpClient httpClient = new HttpClient();
-            var DeleteCart = await httpClient.DeleteAsync("https://localhost:7007/api/CartDetailsController/" + Id.ToString());
+            HttpClient httpClientDelete = new HttpClient();
+            var deleteGio = await httpClientDelete.DeleteAsync($"https://localhost:7007/api/CartDetailsController/{Id}");
             return RedirectToAction("Cart");
         }
     }

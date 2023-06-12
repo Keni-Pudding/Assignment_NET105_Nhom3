@@ -14,11 +14,13 @@ namespace Assignment_NET105_Nhom3_API.Controllers  /// ở đây có bill và bi
     public class BillControllers : ControllerBase
     {
         private readonly IBillServices _billServices;
-        private readonly IBillDetailServices _billDetailServices;   
-        public BillControllers(IBillServices billServices, IBillDetailServices billDetailServices)
+        private readonly IBillDetailServices _billDetailServices;
+        private readonly ICustomerService _customerService;
+        public BillControllers(IBillServices billServices, IBillDetailServices billDetailServices, ICustomerService customerService)
         {
             _billServices = billServices;
             _billDetailServices = billDetailServices;
+            _customerService = customerService;
         }
         [EnableQuery]
         [HttpGet("get-all-bill")]
@@ -32,7 +34,7 @@ namespace Assignment_NET105_Nhom3_API.Controllers  /// ở đây có bill và bi
         public async Task<ActionResult<BillViewModel>> AddBill(BillViewModel bill)
         {
             Bill bill1 =new Bill();
-            bill1.Id=Guid.NewGuid(); 
+            bill1.Id=bill.Id;
             bill1.Status = bill.Status;
             bill1.CreatedDate= DateTime.Now;
             bill1.UserId = bill.UserId;
@@ -80,18 +82,12 @@ namespace Assignment_NET105_Nhom3_API.Controllers  /// ở đây có bill và bi
         public async Task<IActionResult> AddBillDetails(BillDetailsViewModels bill)
         {
             BillDetails bill1 = new BillDetails();
-            bill1.Id = Guid.NewGuid();
+
+            bill1.Id = bill.Id;
             bill1.BillId = bill.BillId;
-            if (bill.ComboId == Guid.Empty || bill.ComboId==null)
-            {
-                bill1.ProductDetailsId = bill.ProductDetailsId;
-                bill1.ComboId = null;
-            }
-            else
-            {
-                bill1.ComboId = bill.ComboId;
-                bill1.ProductDetailsId = null;
-            }                  
+            //bill1.BillId = Guid.Parse("47620022-9139-4A6A-A10F-1669013817F2");                  
+            bill1.ProductDetailsId = bill.ProductDetailsId;
+            bill1.ComboId = Guid.Parse("1C43986F-8438-4D0E-81CC-7DFE1434DC12");
             bill1.Price = bill.Price;
             bill1.Quantity  = bill.Quantity;
             var result = await _billDetailServices.Add(bill1);
@@ -103,16 +99,6 @@ namespace Assignment_NET105_Nhom3_API.Controllers  /// ở đây có bill và bi
         {
             var a= await _billDetailServices.GetBillDetailById(bill.Id);         
             
-            //if (bill.ComboId == Guid.Empty)
-            //{
-            //    a.ProductDetailsId = bill.ProductDetailsId;
-            //}
-            //else
-            //{
-            //    a.ComboId = bill.ComboId;
-            //}
-            //a.ProductDetailsId = bill.ProductDetailsId;
-            //a.ComboId = bill.ComboId;
             a.Price = bill.Price;
             a.Quantity = bill.Quantity;
             await _billDetailServices.Update(a);
@@ -127,6 +113,13 @@ namespace Assignment_NET105_Nhom3_API.Controllers  /// ở đây có bill và bi
             return Ok();
         }
 
+
+        [HttpGet("get_all_Customer")]
+        public async Task<IActionResult> GetAllCustomer()
+        {
+            var a= await _customerService.GetAllCustomer();
+            return Ok(a);
+        }
 
 
     }

@@ -17,8 +17,8 @@ namespace Assignment_NET105_Nhom3_API.Services
         {
             try
             {
-                _context.BillDetails.Add(billDetails);
-                await _context.SaveChangesAsync();
+                var a =await _context.BillDetails.AddAsync(billDetails);
+                 var b=await _context.SaveChangesAsync();
                 return true;
             }
             catch (Exception e)
@@ -54,7 +54,7 @@ namespace Assignment_NET105_Nhom3_API.Services
 
         public async Task<BillDetails> GetBillDetailById(Guid Id)
         {
-            var a= await _context.BillDetails.FindAsync(Id);
+            var a= await _context.BillDetails.FirstOrDefaultAsync(x=>x.Id==Id);
             return a;
         }
 
