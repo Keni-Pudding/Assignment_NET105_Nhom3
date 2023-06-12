@@ -400,6 +400,7 @@ namespace Assignment_NET105_Nhom3.Controllers
                         addcartDetails.Id = Guid.NewGuid();
                         addcartDetails.UserId = Guid.Parse("340287BA-DD62-4AB9-B6C5-5C14C9BC694C"); // id của khách vãng lai
                         addcartDetails.ProductDetailId = ProductDetails.Id;
+                        addcartDetails.ComboId = Guid.Parse("1C43986F-8438-4D0E-81CC-7DFE1434DC12");
                         addcartDetails.Quantity = quantity;
                         var content = System.Text.Json.JsonSerializer.Serialize(addcartDetails);
 
@@ -482,6 +483,7 @@ namespace Assignment_NET105_Nhom3.Controllers
                         HttpClient client = new HttpClient();
                         addcartDetails.Id = Guid.NewGuid();
                         addcartDetails.UserId = Guid.Parse(UserId);
+                        addcartDetails.ComboId = Guid.Parse("1c43986f-8438-4d0e-81cc-7dfe1434dc12");
                         addcartDetails.ProductDetailId = ProductDetails.Id;
                         addcartDetails.Quantity = quantity;
                         var content = System.Text.Json.JsonSerializer.Serialize(addcartDetails);
@@ -496,7 +498,7 @@ namespace Assignment_NET105_Nhom3.Controllers
                     {
                         HttpClient client = new HttpClient();
                         addcartDetails.Id = CartDetails.Id;
-                        addcartDetails.UserId = Guid.Parse("340287BA-DD62-4AB9-B6C5-5C14C9BC694C");
+                        addcartDetails.UserId = Guid.Parse(UserId);
                         addcartDetails.ProductDetailId = ProductDetails.Id;
                         addcartDetails.ComboId = Guid.Parse("1C43986F-8438-4D0E-81CC-7DFE1434DC12");
                         int a = Convert.ToInt32(CartDetails.Quantity);

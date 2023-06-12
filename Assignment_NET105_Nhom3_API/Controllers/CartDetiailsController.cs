@@ -4,6 +4,7 @@ using Assignment_NET105_Nhom3_Shared.Models;
 using Assignment_NET105_Nhom3_Shared.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Assignment_NET105_Nhom3_API.Controllers
 {
@@ -46,7 +47,7 @@ namespace Assignment_NET105_Nhom3_API.Controllers
             CartDetails ct = new CartDetails();
             ct.Id = pd.Id;
             ct.UserId = pd.UserId;
-          //  ct.ComboId = pd.ComboId;
+            ct.ComboId = pd.ComboId;
             ct.ProductDetailId = pd.ProductDetailId;
             ct.Quantity = pd.Quantity;
             await cartDetailService.PostCartDetailssAsync(ct);
@@ -56,10 +57,12 @@ namespace Assignment_NET105_Nhom3_API.Controllers
         public async Task<ActionResult<CartDetails>> PutCartDetails(CartDetails cd) // Update
         {
             CartDetails cartdt = await cartDetailService.GetCartDetailssByIDAsync(cd.Id);
-            cartdt.ProductDetailId = cd.ProductDetailId;
-            cartdt.UserId = cd.UserId;
-             cartdt.ComboId = Guid.Parse("1C43986F-8438-4D0E-81CC-7DFE1434DC12");
-            cartdt.Quantity = cd.Quantity;
+            //cartdt.ProductDetailId = cd.ProductDetailId;
+            //cartdt.UserId = cd.UserId;
+            //cartdt.ComboId = cd.ComboId;
+            //cartdt.Quantity = cd.Quantity;
+            // cartdt.Id = cd.Id;
+            cartdt = cd;
             await cartDetailService.PutCartDetailssAsync(cartdt);
             return Ok();
 

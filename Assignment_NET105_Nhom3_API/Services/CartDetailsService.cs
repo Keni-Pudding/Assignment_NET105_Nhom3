@@ -90,7 +90,10 @@ namespace Assignment_NET105_Nhom3_API.Services
         {
             var x = await _myDbContext.CartDetails.FindAsync(CartDetails.Id);
             if (x == null) return null;
-           // x.ComboId= CartDetails.ComboId;
+            x.Id = CartDetails.Id;
+            x.ProductDetailId = CartDetails.ProductDetailId;
+            x.UserId = CartDetails.UserId;
+            x.ComboId= CartDetails.ComboId;
             x.Quantity = CartDetails.Quantity;
             await _myDbContext.SaveChangesAsync();
             return x;
