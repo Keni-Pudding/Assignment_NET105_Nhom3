@@ -70,5 +70,12 @@ namespace Assignment_NET105_Nhom3_API.Controllers
             var result = await _productDetailsService.DeleteProductDetailsAsync(ID);
             return Ok(result);
         }
+
+        [HttpGet("get_productDetail_by_id/{Id}")]
+        public async Task<ActionResult> GetProductDetailByBill(Guid Id)
+        {
+            var a = await _productDetailsService.GetAllProductDetailsByBill(Id);
+            return Ok(a);
+        }
     }
 }

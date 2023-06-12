@@ -78,8 +78,8 @@ namespace Assignment_NET105_Nhom3_API.Controllers
         [HttpGet("cart_detail_by_user/{UserId}")]
         public async Task<ActionResult> GetCartDetailByUserId(Guid UserId)
         {
-            await cartDetailService.GetAllCartDetailsByUsser(UserId);
-            return Ok();
+            var a =await cartDetailService.GetAllCartDetailsByUsser(UserId);
+            return Ok(a);
         }
     }
 }

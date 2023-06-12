@@ -37,7 +37,8 @@ namespace Assignment_NET105_Nhom3_API.Services
 
         public async Task<ProductDetails> GetProductDetailsByIDAsync(Guid ID)
         {
-            return await _context.ProductDetails.FirstOrDefaultAsync(c => c.Id == ID);
+            var a= await _context.ProductDetails.FirstOrDefaultAsync(c => c.Id == ID);
+            return a;
         }
 
         public async Task<ProductDetails> PostProductDetailsAsync(ProductDetails ProductDetails)
@@ -117,6 +118,12 @@ namespace Assignment_NET105_Nhom3_API.Services
                                Price = p.Price,
                            }).Where(c => c.Id == id).ToList();
             return pd_Show;
+        }
+
+        public async Task<List<ProductDetails>> GetAllProductDetailsByBill(Guid Id)
+        {
+            List<ProductDetails> a = _context.ProductDetails.Where(x => x.Id == Id).ToList();
+            return a;
         }
     }
 }

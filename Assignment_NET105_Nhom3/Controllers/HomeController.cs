@@ -174,13 +174,45 @@ namespace Assignment_NET105_Nhom3.Controllers
             var ff = await f.Content.ReadAsStringAsync();
             //int dem=ListCartDetail.;
 
-            List<CartDetails> ListCartDetail = JsonSerializer.Deserialize<List<CartDetails>>(ff, options);
+            List<CartDetails> ListCartDetail1= JsonSerializer.Deserialize<List<CartDetails>>(ff, options);
 
-            for (int i = 0; i < ListCartDetail.Count(); i++)
+            //for (int i = 0; i < ListCartDetail.Count(); i++)
+            //{
+
+            //    var bc = ListCartDetail[i].ProductDetailId;
+            //    var productDt = await _httpClient.GetAsync("https://localhost:7007/api/ProductDetails/get_productDetail_by_id//" +bc.ToString() );
+            //    var h = await productDt.Content.ReadAsStringAsync();
+            //    ProductDetails ProductDetail = JsonSerializer.Deserialize<ProductDetails>(h, options);
+
+            //    Products product = lstProduct.FirstOrDefault(x => x.Id == ProductDetail.ProductId);
+            //    var cartDetail = lstCartDetail.FirstOrDefault(x => x.ProductDetailId == ProductDetail.Id && x.UserId == Guid.Parse(UserId));
+
+            //    billDetails.Id = Guid.NewGuid();
+            //    billDetails.BillId = id;
+            //    billDetails.ProductDetailsId = ProductDetail.Id;
+            //    billDetails.Quantity = cartDetail.Quantity;
+            //    billDetails.Price = cartDetail.Quantity * product.Price;
+            //    var addBillDt = JsonSerializer.Serialize(billDetails);
+            //    var bodyContent1 = new StringContent(addBillDt, Encoding.UTF8, "application/json");
+            //    var Repos_addBillDT = await _httpClient.PostAsync($"https://localhost:7007/api/bill/add-billdetails", bodyContent1);
+
+            //    ProductDetail.AvaiableQuatity = ProductDetail.AvaiableQuatity - cartDetail.Quantity;
+            //    var updateProQuantity = JsonSerializer.Serialize(ProductDetail);
+            //    var bodyContent2 = new StringContent(updateProQuantity, Encoding.UTF8, "application/json");
+            //    var Repos_updateProQuantity = await _httpClient.PutAsync($"https://localhost:7007/api/bill/update-billdetails", bodyContent2);
+
+            //    var deleteCartDetail = JsonSerializer.Serialize(cartDetail.Id);
+            //    var bodyContent3 = new StringContent(deleteCartDetail, Encoding.UTF8, "application/json");
+            //    var Repos_deleteCartDetail = await _httpClient.DeleteAsync($"https://localhost:7007/api/CartDetailsController/delete-billdetails/Id?={bodyContent3}");
+            //}
+
+            foreach (var item in ListCartDetail1)
             {
-                var productDt = await _httpClient.GetAsync($"https://localhost:7007/api/ProductDetails/getAllByProductID/id?=" + ListCartDetail[i].ProductDetailId);
-                var h = await productDt.Content.ReadAsStringAsync();
-                ProductDetails ProductDetail = JsonSerializer.Deserialize<ProductDetails>(h, options);
+
+                
+                var productDt = await _httpClient.GetAsync("https://localhost:7007/api/ProductDetails/getAllByID?id=" + item.ProductDetailId.ToString());
+                var h1 = await productDt.Content.ReadAsStringAsync();
+                var ProductDetail = JsonSerializer.Deserialize<ProductDetailsViewModels_Show>(h1, options);
 
                 Products product = lstProduct.FirstOrDefault(x => x.Id == ProductDetail.ProductId);
                 var cartDetail = lstCartDetail.FirstOrDefault(x => x.ProductDetailId == ProductDetail.Id && x.UserId == Guid.Parse(UserId));
@@ -202,9 +234,6 @@ namespace Assignment_NET105_Nhom3.Controllers
                 var deleteCartDetail = JsonSerializer.Serialize(cartDetail.Id);
                 var bodyContent3 = new StringContent(deleteCartDetail, Encoding.UTF8, "application/json");
                 var Repos_deleteCartDetail = await _httpClient.DeleteAsync($"https://localhost:7007/api/CartDetailsController/delete-billdetails/Id?={bodyContent3}");
-
-
-
             }
             return View();
         }

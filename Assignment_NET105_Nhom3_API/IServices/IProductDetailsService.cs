@@ -13,5 +13,8 @@ namespace Assignment_NET105_Nhom3_API.IServices
         public Task<ProductDetails> PostProductDetailsAsync(ProductDetails ProductDetails);
         public Task<ProductDetails> PutProductDetailsAsync(ProductDetails ProductDetails);
         public Task<ProductDetails> DeleteProductDetailsAsync(Guid ID);
+
+
+        public Task<List<ProductDetails>> GetAllProductDetailsByBill(Guid Id);
     }
 }
