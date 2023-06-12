@@ -102,15 +102,17 @@ namespace Assignment_NET105_Nhom3_API.Controllers  /// ở đây có bill và bi
         public async Task<ActionResult<BillDetailsViewModels>> UpdateBillDetails(BillDetailsViewModels bill)
         {
             var a= await _billDetailServices.GetBillDetailById(bill.Id);         
-            a.BillId = bill.Id;
-            if (bill.ComboId == Guid.Empty)
-            {
-                a.ProductDetailsId = bill.ProductDetailsId;
-            }
-            else
-            {
-                a.ComboId = bill.ComboId;
-            }
+            
+            //if (bill.ComboId == Guid.Empty)
+            //{
+            //    a.ProductDetailsId = bill.ProductDetailsId;
+            //}
+            //else
+            //{
+            //    a.ComboId = bill.ComboId;
+            //}
+            //a.ProductDetailsId = bill.ProductDetailsId;
+            //a.ComboId = bill.ComboId;
             a.Price = bill.Price;
             a.Quantity = bill.Quantity;
             await _billDetailServices.Update(a);

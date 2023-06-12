@@ -54,7 +54,8 @@ namespace Assignment_NET105_Nhom3_API.Services
 
         public async Task<BillDetails> GetBillDetailById(Guid Id)
         {
-            return await _context.BillDetails.FindAsync(Id);
+            var a= await _context.BillDetails.FindAsync(Id);
+            return a;
         }
 
         public async Task<List<BillDetailsViewModels_Show>> GetBillDetailtByBill(Guid Id)

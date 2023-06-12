@@ -16,5 +16,6 @@ namespace Assignment_NET105_Nhom3_API.IServices
 
 
         public Task<List<ProductDetails>> GetAllProductDetailsByBill(Guid Id);
+        public ProductDetailsViewModels_Add_Up GetAllProductDetailsByProductID_View_ThangBUG(Guid id);
     }
 }

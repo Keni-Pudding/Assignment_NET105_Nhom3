@@ -125,5 +125,25 @@ namespace Assignment_NET105_Nhom3_API.Services
             List<ProductDetails> a = _context.ProductDetails.Where(x => x.Id == Id).ToList();
             return a;
         }
+
+
+        public ProductDetailsViewModels_Add_Up GetAllProductDetailsByProductID_View_ThangBUG(Guid id)
+        {
+            var pd_Show = (from pd in _context.ProductDetails.ToList()
+                           join s in _context.Size.ToList() on pd.SizeId equals s.Id
+                           join c in _context.Color.ToList() on pd.ColorId equals c.Id
+                           join p in _context.Products.ToList() on pd.ProductId equals p.Id
+                           join cate in _context.Category.ToList() on p.CategoryId equals cate.Id
+                           select new ProductDetailsViewModels_Add_Up()
+                           {
+                               Id = pd.Id,
+                               ProductId = p.Id,
+                               ColorId = c.Id,
+                               SizeId = s.Id,
+                               AvaiableQuatity = pd.AvaiableQuatity,
+                               Status = pd.Status,
+                           }).FirstOrDefault(c=>c.Id == id);
+            return pd_Show;
+        }
     }
 }

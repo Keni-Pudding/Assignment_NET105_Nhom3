@@ -210,9 +210,9 @@ namespace Assignment_NET105_Nhom3.Controllers
             {
 
                 
-                var productDt = await _httpClient.GetAsync("https://localhost:7007/api/ProductDetails/getAllByID?id=" + item.ProductDetailId.ToString());
+                var productDt = await _httpClient.GetAsync("https://localhost:7007/api/ProductDetails/ThangBug?Id=" + item.ProductDetailId.ToString());
                 var h1 = await productDt.Content.ReadAsStringAsync();
-                var ProductDetail = JsonSerializer.Deserialize<ProductDetailsViewModels_Show>(h1, options);
+                var ProductDetail = JsonSerializer.Deserialize<ProductDetailsViewModels_Add_Up>(h1, options);
 
                 Products product = lstProduct.FirstOrDefault(x => x.Id == ProductDetail.ProductId);
                 var cartDetail = lstCartDetail.FirstOrDefault(x => x.ProductDetailId == ProductDetail.Id && x.UserId == Guid.Parse(UserId));
@@ -226,16 +226,16 @@ namespace Assignment_NET105_Nhom3.Controllers
                 var bodyContent1 = new StringContent(addBillDt, Encoding.UTF8, "application/json");
                 var Repos_addBillDT = await _httpClient.PostAsync($"https://localhost:7007/api/bill/add-billdetails", bodyContent1);
 
-                ProductDetail.AvaiableQuatity = ProductDetail.AvaiableQuatity - cartDetail.Quantity;
-                var updateProQuantity = JsonSerializer.Serialize(ProductDetail);
-                var bodyContent2 = new StringContent(updateProQuantity, Encoding.UTF8, "application/json");
-                var Repos_updateProQuantity = await _httpClient.PutAsync($"https://localhost:7007/api/bill/update-billdetails", bodyContent2);
+                //ProductDetail.AvaiableQuatity = ProductDetail.AvaiableQuatity - cartDetail.Quantity;
+                //var updateProQuantity = JsonSerializer.Serialize(ProductDetail);
+                //var bodyContent2 = new StringContent(updateProQuantity, Encoding.UTF8, "application/json");
+                //var Repos_updateProQuantity = await _httpClient.PutAsync($"https://localhost:7007/api/bill/update-billdetails", bodyContent2);
 
                 var deleteCartDetail = JsonSerializer.Serialize(cartDetail.Id);
                 var bodyContent3 = new StringContent(deleteCartDetail, Encoding.UTF8, "application/json");
-                var Repos_deleteCartDetail = await _httpClient.DeleteAsync($"https://localhost:7007/api/CartDetailsController/delete-billdetails/Id?={bodyContent3}");
+                var Repos_deleteCartDetail = await _httpClient.DeleteAsync($"https://localhost:7007/api/CartDetailsController/{bodyContent3}");
             }
-            return View();
+            return RedirectToAction("Bill");
         }
         public async Task<IActionResult> DetailShop(Guid Id)
         {

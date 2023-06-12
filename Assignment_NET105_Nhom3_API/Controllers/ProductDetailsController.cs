@@ -77,5 +77,12 @@ namespace Assignment_NET105_Nhom3_API.Controllers
             var a = await _productDetailsService.GetAllProductDetailsByBill(Id);
             return Ok(a);
         }
+
+        [HttpGet("ThangBug")]
+        public IActionResult GetAllProductDetailsByProductID_View_ThangBUG(Guid Id)
+        {
+            var a = _productDetailsService.GetAllProductDetailsByProductID_View_ThangBUG(Id);
+            return Ok(a);
+        }
     }
 }
