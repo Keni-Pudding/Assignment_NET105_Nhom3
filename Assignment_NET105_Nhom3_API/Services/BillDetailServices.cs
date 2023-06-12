@@ -96,6 +96,7 @@ namespace Assignment_NET105_Nhom3_API.Services
                              {
                                  Id=a.Id,
                                  BillId=a.BillId,
+                                 //UserId=b.UserId,
                                  ProductName=d.Name,
                                  Image=d.Image,
                                  Size=e.Name,

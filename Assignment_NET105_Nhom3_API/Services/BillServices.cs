@@ -65,6 +65,7 @@ namespace Assignment_NET105_Nhom3_API.Services
                      select new BillViewModel_Show()
                      {
                          Id = a.Id,
+                         UserId= a.UserId,
                          UserName = b.UserName,
                          CreatedDate= a.CreatedDate,
                          Status= a.Status,

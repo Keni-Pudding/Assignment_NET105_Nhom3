@@ -10,6 +10,7 @@ namespace Assignment_NET105_Nhom3_Shared.ViewModels
     {
         public Guid Id { get; set; }
         public Guid BillId { get; set; }
+        public Guid UserId { get; set; }    
         public string? ProductName { get; set; }
         public string? ComboName { get; set; }
         public string? Image { get; set; }

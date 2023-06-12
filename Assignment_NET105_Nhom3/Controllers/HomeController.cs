@@ -75,15 +75,45 @@ namespace Assignment_NET105_Nhom3.Controllers
         [HttpGet]
         public async Task<IActionResult> Bill()
         {
-            var response = await _httpClient.GetAsync($"https://localhost:7007/api/bill/get-all-bill");
-            var a = await response.Content.ReadAsStringAsync();
             var options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             };
-            List<BillViewModel_Show> bills = JsonSerializer.Deserialize<List<BillViewModel_Show>>(a, options);
-            ViewBag.Bill = bills;
-            return View(bills);
+
+            var reponse1 = await _httpClient.GetAsync("https://localhost:7007/api/bill/get_all_Customer");
+            var asss = await reponse1.Content.ReadAsStringAsync();
+            List<Customer> Usser = JsonSerializer.Deserialize<List<Customer>>(asss, options);
+            var UserId = HttpContext.Session.GetString("UserId");
+
+
+            if (UserId != null && Usser.FirstOrDefault(x => x.Id == Guid.Parse(UserId)).RoleId==Guid.Parse("9BD49D4B-ADDE-470F-9C70-29CBB73CB46F"))
+            {
+                var response = await _httpClient.GetAsync($"https://localhost:7007/api/bill/get-all-bill");
+                var a = await response.Content.ReadAsStringAsync();
+               
+                List<BillViewModel_Show> bills = JsonSerializer.Deserialize<List<BillViewModel_Show>>(a, options);
+
+                var customer = Usser.FirstOrDefault(x => x.Id == Guid.Parse(UserId)).Name;
+
+                var aaa = bills.Where(x => x.UserId == Guid.Parse(UserId)).ToList();
+                ViewBag.Bill = bills;
+            }
+            if (UserId != null && Usser.FirstOrDefault(x => x.Id == Guid.Parse(UserId)).RoleId == Guid.Parse("AE41F26C-FA31-46B2-9857-2FCA416C10FB"))
+            {
+                var response = await _httpClient.GetAsync($"https://localhost:7007/api/bill/get-all-bill");
+                var a = await response.Content.ReadAsStringAsync();
+
+                List<BillViewModel_Show> bills = JsonSerializer.Deserialize<List<BillViewModel_Show>>(a, options);
+
+                var customer = Usser.FirstOrDefault(x => x.Id == Guid.Parse(UserId)).Name;
+
+                //var aaa = bills.Where(x => x.UserId == Guid.Parse(UserId)).ToList();
+                ViewBag.Bill = bills;
+            }
+
+
+            //ViewBag.Bill = bills;
+            return View();
         }
 
 
@@ -213,10 +243,10 @@ namespace Assignment_NET105_Nhom3.Controllers
                 var bodyContent1 = new StringContent(addBillDt, Encoding.UTF8, "application/json");
                 var Repos_addBillDT = await _httpClient.PostAsync($"https://localhost:7007/api/bill/add-billdetails", bodyContent1);
 
-                ProductDetail.AvaiableQuatity = ProductDetail.AvaiableQuatity - cartDetail.Quantity;
-                var updateProQuantity = JsonSerializer.Serialize(ProductDetail);
-                var bodyContent2 = new StringContent(updateProQuantity, Encoding.UTF8, "application/json");
-                var Repos_updateProQuantity = await _httpClient.PutAsync($"https://localhost:7007/api/bill/update-billdetails", bodyContent2);
+                //ProductDetail.AvaiableQuatity = ProductDetail.AvaiableQuatity - cartDetail.Quantity;
+                //var updateProQuantity = JsonSerializer.Serialize(ProductDetail);
+                //var bodyContent2 = new StringContent(updateProQuantity, Encoding.UTF8, "application/json");
+                //var Repos_updateProQuantity = await _httpClient.PutAsync($"https://localhost:7007/api/bill/update-billdetails", bodyContent2);
 
                 // Xóa giỏ
                 HttpClient httpClientDelete = new HttpClient();
