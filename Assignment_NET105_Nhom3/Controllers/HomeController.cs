@@ -335,7 +335,7 @@ namespace Assignment_NET105_Nhom3.Controllers
         [HttpPost]
         public async Task<IActionResult> AddToCart(Guid ProductId, Guid ColorID, Guid SizeID, int quantity, CartDetails addcartDetails, CartDetails addcartDetails1)
         {
-            //Xóa các session
+            ////Xóa các session
             HttpContext.Session.Remove("hethang");
             HttpContext.Session.Remove("soluonghet");
             HttpContext.Session.Remove("soluongkhongdu");
@@ -364,8 +364,10 @@ namespace Assignment_NET105_Nhom3.Controllers
                 var ProductDetails = _lstProductDetails.Where(x => x.ColorId == ColorID && x.SizeId == SizeID).FirstOrDefault();
                 if (ProductDetails == null)
                 {
+
                     HttpContext.Session.SetString("hethang", "hethang");
                     return RedirectToAction("DetailShop", new { Id = ProductId });
+
                 }
                 else if (ProductDetails.AvaiableQuatity <= 0)
                 {
@@ -425,8 +427,7 @@ namespace Assignment_NET105_Nhom3.Controllers
                         var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
                         // Call API
                         var postResult = await client.PutAsync($"https://localhost:7007/api/CartDetailsController/Put", bodyContent);
-
-                        HttpContext.Session.SetString("thanhcong", "thanhcong");
+                        HttpContext.Session.SetString("thanhcong", string.Empty);
                         return RedirectToAction("DetailShop", new { Id = ProductId });
                     }
                 }
@@ -491,8 +492,13 @@ namespace Assignment_NET105_Nhom3.Controllers
                         var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
                         // Call API
                         var postResult = await client.PostAsync($"https://localhost:7007/api/CartDetailsController/Add", bodyContent);
-                        HttpContext.Session.SetString("thanhcong", "thanhcong");
+                        // Lấy giá trị của biến session có tên "username"
+                        string thanhcong = HttpContext.Session.GetString("thanhcong");
+
+                        // Trả về giá trị của biến session dưới dạng một đối tượng JSON
+                        // return Json(new { thanhcong });
                         return RedirectToAction("DetailShop", new { Id = ProductId });
+
                     }
                     else
                     {
@@ -509,12 +515,21 @@ namespace Assignment_NET105_Nhom3.Controllers
                         var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
                         // Call API
                         var postResult = await client.PutAsync($"https://localhost:7007/api/CartDetailsController/Put", bodyContent);
-                        HttpContext.Session.SetString("thanhcong", "thanhcong");
+                        string thanhcong = HttpContext.Session.GetString("thanhcong");
+
+                        // Trả về giá trị của biến session dưới dạng một đối tượng JSON
+                        // return Json(new { thanhcong });
+                        //  return RedirectToAction("DetailShop", new { Id = ProductId });
                         return RedirectToAction("DetailShop", new { Id = ProductId });
+                        // return PartialView(thanhcong, "thanhcong" ); 
                     }
                 }
             }
-            return RedirectToAction("Index");
+            // string dd = HttpContext.Session.GetString("a");
+
+            // Trả về giá trị của biến session dưới dạng một đối tượng JSON
+            // return Json(new { dd });
+            return RedirectToAction("DetailShop", new { Id = ProductId });
             //check sản phẩm có tồn tại không 
             //check xem nó có giỏ hàng hay chưa 
             //check xem giỏ hàng có sản phẩm hay chưa 

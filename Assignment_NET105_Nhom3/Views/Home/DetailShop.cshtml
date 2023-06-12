@@ -35,7 +35,7 @@
                     <div class="row">
                         <div class="col-md-10">
                             <div class="Mausac">
-                                <h5>Giá bán: @Model.Price đ</h5>
+                            <h5>Giá bán: @Model.Price.ToString("#,##0") đ</h5>
                             </div>
                         </div>
                     </div>
@@ -85,34 +85,29 @@
 
     </div>
 <p>@ViewBag.Hethang</p>
-@if (!string.IsNullOrEmpty(Hethang))
+@if (!String.IsNullOrEmpty(Hethang))
 {
     <script type="text/javascript">
 
         Swal.fire("Sản phẩm đã hết hàng")
     </script>
 }
-@if (!string.IsNullOrEmpty(soluonghet))
+@if (!String.IsNullOrEmpty(soluonghet))
 {
     <script type="text/javascript">
 
         Swal.fire("Sản phẩm số lượng không đủ ")
     </script>
 }
-@if (!string.IsNullOrEmpty(soluongkhongdu))
+@if (!String.IsNullOrEmpty(soluongkhongdu))
 {
     <script type="text/javascript">
 
         Swal.fire("Số lượng không đủ để bán ")
     </script>
 }
-@if (!string.IsNullOrEmpty(thanhcong))
-{
-    <script type="text/javascript">
 
-        Swal.fire("Thêm sản phẩm thành công ")
-    </script>
-}@if (!string.IsNullOrEmpty(chuachon))
+}@if (!String.IsNullOrEmpty(chuachon))
 {
     <script type="text/javascript">
 
