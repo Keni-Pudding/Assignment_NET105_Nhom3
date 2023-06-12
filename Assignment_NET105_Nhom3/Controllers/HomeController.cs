@@ -95,6 +95,11 @@ namespace Assignment_NET105_Nhom3.Controllers
         public async Task<IActionResult> Cart()
         {
             var UserId = HttpContext.Session.GetString("UserId");
+            if (UserId==null)
+            {
+                UserId =("340287BA-DD62-4AB9-B6C5-5C14C9BC694C");                
+            }
+            
             var response = await _httpClient.GetAsync($"https://localhost:7007/api/CartDetailsController/ShowCartDetails/" + UserId.ToString());
             var a = await response.Content.ReadAsStringAsync();
             var options = new JsonSerializerOptions

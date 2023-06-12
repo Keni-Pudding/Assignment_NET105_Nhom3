@@ -72,7 +72,7 @@ namespace Assignment_NET105_Nhom3_API.Services
                                  ColorName = e.Name,
                                  Image = d.Image,
                                  Price = d.Price,
-                                 ComboId = Guid.Parse("1C43986F-8438-4D0E-81CC-7DFE1434DC12"),
+                               //  ComboId = Guid.Parse("1C43986F-8438-4D0E-81CC-7DFE1434DC12"),
                                  Quantity = a.Quantity,
                              }).ToListAsync();
             return bds;
