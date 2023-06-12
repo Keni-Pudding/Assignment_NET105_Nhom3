@@ -96,7 +96,7 @@ namespace Assignment_NET105_Nhom3.Controllers
                 var customer = Usser.FirstOrDefault(x => x.Id == Guid.Parse(UserId)).Name;
 
                 var aaa = bills.Where(x => x.UserId == Guid.Parse(UserId)).ToList();
-                ViewBag.Bill = bills;
+                ViewBag.Bill = aaa;
             }
             if (UserId != null && Usser.FirstOrDefault(x => x.Id == Guid.Parse(UserId)).RoleId == Guid.Parse("AE41F26C-FA31-46B2-9857-2FCA416C10FB"))
             {
