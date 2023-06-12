@@ -94,7 +94,7 @@ namespace Assignment_NET105_Nhom3_API.Services
                            }).Where(c => c.ProductId == id).ToList();
             return pd_Show;
         }
-        public List<ProductDetailsViewModels_Show> GetAllProductDetailsByID_View(Guid id)
+        public ProductDetailsViewModels_Show GetAllProductDetailsByID_View(Guid id)
         {
             var pd_Show = (from pd in _context.ProductDetails.ToList()
                            join s in _context.Size.ToList() on pd.SizeId equals s.Id
@@ -116,7 +116,7 @@ namespace Assignment_NET105_Nhom3_API.Services
                                CategoryName = cate.Name,
                                Image = p.Image,
                                Price = p.Price,
-                           }).Where(c => c.Id == id).ToList();
+                           }).FirstOrDefault(c => c.Id == id);
             return pd_Show;
         }
 

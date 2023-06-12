@@ -41,7 +41,7 @@
                     @foreach (var a in ViewBag.Products)
                     {
                         <div class="col-md-3">
-                            <a href="@Url.Action("Detail","Home",new{Id=a.Id})" style="text-decoration:none; color: white">
+                            <a href="@Url.Action("DetailShop","Home",new{Id=a.Id})" style="text-decoration:none; color: white">
                                 <img src="/images/@a.Image" class="img-thumbnail " alt="Cinque Terre">
                                 <h6>@a.Name</h6>
                                 <center>

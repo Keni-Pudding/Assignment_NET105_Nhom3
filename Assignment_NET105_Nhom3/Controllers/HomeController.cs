@@ -236,9 +236,9 @@ namespace Assignment_NET105_Nhom3.Controllers
                 //var bodyContent2 = new StringContent(updateProQuantity, Encoding.UTF8, "application/json");
                 //var Repos_updateProQuantity = await _httpClient.PutAsync($"https://localhost:7007/api/bill/update-billdetails", bodyContent2);
 
-                var deleteCartDetail = JsonSerializer.Serialize(cartDetail.Id);
-                var bodyContent3 = new StringContent(deleteCartDetail, Encoding.UTF8, "application/json");
-                var Repos_deleteCartDetail = await _httpClient.DeleteAsync($"https://localhost:7007/api/CartDetailsController/{bodyContent3}");
+                // Xóa giỏ
+                HttpClient httpClientDelete = new HttpClient();
+                var deleteGio = await httpClientDelete.DeleteAsync($"https://localhost:7007/api/CartDetailsController/{item.Id}");
             }
             return RedirectToAction("Bill");
         }

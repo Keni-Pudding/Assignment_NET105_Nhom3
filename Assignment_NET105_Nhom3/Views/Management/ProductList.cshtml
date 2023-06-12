@@ -17,8 +17,8 @@
                 <th scope="col">STT</th>
                 <th scope="col">Ảnh</th>
                 <th scope="col">Tên sản phẩm</th>
-                <th scope="col">Giá bán</th>
                 <th scope="col">Thể loại</th>
+                <th scope="col">Giá bán</th>
                 <th scope="col">Trạng thái</th>
                 <th scope="col">Chức năng</th>
             </tr>
@@ -38,7 +38,7 @@
                     </th>
                     <th>@a.Name</th>
                     <th>@a.CategoryName</th>
-                    <th>@a.Price</th>
+                    <th>@a.Price.ToString("#,##0")đ</th>
                     <th>@(a.Status == 1 ? "Đang kinh doanh" : "Ngừng kinh doanh")</th>
                     <th>
                         <a href="@Url.Action("DeleteProducts","Management",new{Id=a.Id})" style="text-decoration:none; color: white">
