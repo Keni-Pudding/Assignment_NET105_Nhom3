@@ -41,24 +41,24 @@ namespace Assignment_NET105_Nhom3_API.Controllers
             return Ok(pd);
         }
         [HttpPost("Add/")]
-        public async Task<ActionResult<CartDetailsViewModels>> PostCartDetails(CartDetailsViewModels pd) // Tạo mới
+        public async Task<ActionResult<CartDetailsViewModels>> PostCartDetails(CartDetails pd) // Tạo mới
         {
             CartDetails ct = new CartDetails();
             ct.Id = pd.Id;
             ct.UserId = pd.UserId;
-            ct.ComboId = pd.ComboId;
+          //  ct.ComboId = pd.ComboId;
             ct.ProductDetailId = pd.ProductDetailId;
             ct.Quantity = pd.Quantity;
             await cartDetailService.PostCartDetailssAsync(ct);
             return Ok(pd);
         }
         [HttpPut("Put")]
-        public async Task<ActionResult<CartDetails>> PutCartDetails(CartDetailsViewModels cd) // Update
+        public async Task<ActionResult<CartDetails>> PutCartDetails(CartDetails cd) // Update
         {
             CartDetails cartdt = await cartDetailService.GetCartDetailssByIDAsync(cd.Id);
             cartdt.ProductDetailId = cd.ProductDetailId;
             cartdt.UserId = cd.UserId;
-            // cartdt.ComboId = cd.ComboId;
+             cartdt.ComboId = Guid.Parse("1C43986F-8438-4D0E-81CC-7DFE1434DC12");
             cartdt.Quantity = cd.Quantity;
             await cartDetailService.PutCartDetailssAsync(cartdt);
             return Ok();

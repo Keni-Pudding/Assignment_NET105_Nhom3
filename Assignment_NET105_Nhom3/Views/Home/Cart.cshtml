@@ -20,17 +20,17 @@
            
     <div class="row thanhtoan">
 
-        <div class="col-md-8">
+        <div class="col-md-5">
             @{
                 decimal total = 0;
             }
             @foreach (var a in ViewBag.ShowCartDetails)
             {
                 <div class="row">
-                    <div class="col-md-2"><img src="/images/@a.Image" class="image" alt="..."></div>
-                    <div class="col-md-10">
+                    <div class="col-md-3"><img src="/images/@a.Image" class="image" alt="..."></div>
+                    <div class="col-md-9">
                         <h4>@a.ProductName</h4>
-                        <a href="@Url.Action("Delete","Home" ,new{Id=@a.Id})">
+                        <a href="@Url.Action("DeleteCart","Home" ,new{Id=@a.Id})">
                         <button type="button" class="btn btn-secondary" style="margin-left: 600px; width: 30px; height: 30px;font-size: 15px;">
                             <i class="fa-solid fa-trash-can"></i></button></a>
                         <h5>@a.Price<del>(230.000 đ)</del></h5>
@@ -56,6 +56,8 @@
                 </div>
             </div>
         </div>
+        <div
+            class="col-md-3"></div>
         <div class="col-md-4 thanhtoan1">
            @*<h4>Thông tin thanh toán  (@cartDetails.Count() )</h4>*@
            <form asp-action="PayToBill" method="post">

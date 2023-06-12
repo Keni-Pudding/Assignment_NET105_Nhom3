@@ -410,6 +410,7 @@ namespace Assignment_NET105_Nhom3.Controllers
                         addcartDetails.Id = CartDetails.Id;
                         addcartDetails.UserId = Guid.Parse("340287BA-DD62-4AB9-B6C5-5C14C9BC694C");
                         addcartDetails.ProductDetailId = ProductDetails.Id;
+                        addcartDetails.ComboId = Guid.Parse("1C43986F-8438-4D0E-81CC-7DFE1434DC12");
                         int a = Convert.ToInt32(CartDetails.Quantity);
                         int c = a + quantity;
                         addcartDetails.Quantity = c;/* Convert.ToInt32(quantity);*/
@@ -492,7 +493,8 @@ namespace Assignment_NET105_Nhom3.Controllers
                         addcartDetails.Id = CartDetails.Id;
                         addcartDetails.UserId = Guid.Parse("340287BA-DD62-4AB9-B6C5-5C14C9BC694C");
                         addcartDetails.ProductDetailId = ProductDetails.Id;
-                        int a = Convert.ToInt32(CartDetails);
+                        addcartDetails.ComboId = Guid.Parse("1C43986F-8438-4D0E-81CC-7DFE1434DC12");
+                        int a = Convert.ToInt32(CartDetails.Quantity);
                         int c = a + quantity;
                         addcartDetails.Quantity = c;/* Convert.ToInt32(quantity);*/
                         // int a = addcartDetails.Quantity;
@@ -512,10 +514,11 @@ namespace Assignment_NET105_Nhom3.Controllers
 
             // var Rolename = HttpContext.Session.GetString("role");
 
-        }    
-       
-        
-        
+        }
+
+
+
+
         //[HttpGet]
         //public async Task<IActionResult> Cart()
         //{ 
@@ -530,5 +533,12 @@ namespace Assignment_NET105_Nhom3.Controllers
         //    ViewBag.ShowCartDetails = CartDetails;
         //    return View(CartDetails);
         //}
+        [HttpDelete]
+        public async Task<IActionResult> DeleteCart(Guid Id)
+        {
+            HttpClient httpClient = new HttpClient();
+            var DeleteCart = await httpClient.DeleteAsync("https://localhost:7007/api/CartDetailsController/" + Id.ToString());
+            return RedirectToAction("Cart");
+        }
     }
 }

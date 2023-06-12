@@ -41,22 +41,27 @@
                     </div>
 
                     <form asp-action="AddToCart">
-                    <input value="@Model.Id" name="ProductId" />
+                    <input value="@Model.Id" name="ProductId" hidden="true"/>
+                    
                         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <p>Size: &nbsp  &nbsp &nbsp   </p>
                             @foreach (var a in ViewBag.color)
                             {
-                                <input type="radio" class="btn-check" name="ColorID" id="@a.Id" value="@a.Id">
+                                <input type="radio" class="btn-check" name="ColorID" id="@a.Id" value="@a.Id" >
                                 <label class="btn btn-outline-primary" for="@a.Id">@a.Name</label>
                             }
-                        </div>
+                    </div><br /><br />
+                   
                         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                            @foreach (var a in ViewBag.size)
+                        <p>Màu sắc: &nbsp  &nbsp &nbsp    </p>
+                        @foreach (var a in ViewBag.size)
                             {
                                 <input type="radio" class="btn-check" name="SizeId" id="@a.Id" value="@a.Id">
                                 <label class="btn btn-outline-primary" for="@a.Id">@a.Name</label>
                             }
-                        </div>
+                    </div><br /><br />
                         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <p>Số lượng: &nbsp  &nbsp &nbsp    </p>
                             <div class="mb-3">
                                 <input type="text"
                                        id="quantity"
