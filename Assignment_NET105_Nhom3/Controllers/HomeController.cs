@@ -243,13 +243,33 @@ namespace Assignment_NET105_Nhom3.Controllers
                 var bodyContent1 = new StringContent(addBillDt, Encoding.UTF8, "application/json");
                 var Repos_addBillDT = await _httpClient.PostAsync($"https://localhost:7007/api/bill/add-billdetails", bodyContent1);
 
-                //ProductDetail.AvaiableQuatity = ProductDetail.AvaiableQuatity - cartDetail.Quantity;
-                //var updateProQuantity = JsonSerializer.Serialize(ProductDetail);
-                //var bodyContent2 = new StringContent(updateProQuantity, Encoding.UTF8, "application/json");
-                //var Repos_updateProQuantity = await _httpClient.PutAsync($"https://localhost:7007/api/bill/update-billdetails", bodyContent2);
+				// Lay pd ra
+				HttpClient httpClientpd1 = new HttpClient();
+				var respone = await httpClientpd1.GetAsync($"https://localhost:7007/api/ProductDetails/getbyID?ID={ProductDetail.Id}"); ;
+				var jsonString = await respone.Content.ReadAsStringAsync();
 
-                // Xóa giỏ
-                HttpClient httpClientDelete = new HttpClient();
+				var options1 = new JsonSerializerOptions
+				{
+					PropertyNameCaseInsensitive = true
+				};
+				var data = JsonSerializer.Deserialize<ProductDetailsViewModels_Add_Up>(jsonString, options1);
+
+				data.AvaiableQuatity = data.AvaiableQuatity - cartDetail.Quantity;
+				HttpClient client3 = new HttpClient();
+				// Call API
+
+				var contentUp = System.Text.Json.JsonSerializer.Serialize(data);
+
+				var bodyContentUp = new StringContent(contentUp, Encoding.UTF8, "application/json");
+
+				var putResult = await client3.PutAsync($"https://localhost:7007/api/ProductDetails/update-ProductDetails", bodyContentUp);
+				//ProductDetail.AvaiableQuatity = ProductDetail.AvaiableQuatity - cartDetail.Quantity;
+				//var updateProQuantity = JsonSerializer.Serialize(ProductDetail);
+				//var bodyContent2 = new StringContent(updateProQuantity, Encoding.UTF8, "application/json");
+				//var Repos_updateProQuantity = await _httpClient.PutAsync($"https://localhost:7007/api/bill/update-billdetails", bodyContent2);
+
+				// Xóa giỏ
+				HttpClient httpClientDelete = new HttpClient();
                 var deleteGio = await httpClientDelete.DeleteAsync($"https://localhost:7007/api/CartDetailsController/{item.Id}");
             }
             return RedirectToAction("Bill");
